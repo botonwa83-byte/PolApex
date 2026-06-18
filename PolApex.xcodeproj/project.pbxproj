@@ -1,0 +1,608 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		035C9B93C994E81C00C5FE8F /* ReviewProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA980E098034F30A6536B79E /* ReviewProgressManager.swift */; };
+		0DF8B77BEED4BE6F1EA3D2AD /* ExpansionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAA4D3A4DC8D5960CE07A5C /* ExpansionData.swift */; };
+		281C4DDA429D7D98DAD70DAB /* PolApexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3108101FBDD42EAC32AFBB15 /* PolApexApp.swift */; };
+		3411248F7C00C4CD9A866283 /* ReviewScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3761E3A215CE1C9865006ED /* ReviewScheduler.swift */; };
+		36ACB8C8F6FBBF4FBC2A16EC /* TrapDrillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C212E781575E286690DC42B /* TrapDrillView.swift */; };
+		3C6B543358B67BF9409B469D /* PolContentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D655705D1092C8C4EFA3B9E9 /* PolContentData.swift */; };
+		40BDFC3C5EA656FCAFD5620A /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BB0899F28C30FD85508F0 /* ReviewView.swift */; };
+		4D05A2AB923F0DAD971F7E17 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A085CBBCB508AE30B3C8D28 /* TrainingView.swift */; };
+		62DAF7F99A43A65B70AC8D82 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBDADE3661041F73D444609 /* PaywallView.swift */; };
+		7A7DC3FAC679E7F5D3F4CD6F /* PoliticsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4799D4AB5007D110090C33B6 /* PoliticsModels.swift */; };
+		7F21F888EBBA52A797604132 /* ConceptGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012EF863470A6ECF1E865F5 /* ConceptGraphView.swift */; };
+		95DF7035F4C67CA5B9F2ACEA /* PolApexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BB2BD66299779425A7BEE5 /* PolApexTests.swift */; };
+		9685187525F60C8802B47F8D /* AnswerTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DF71447E250A01D376CF21 /* AnswerTemplateView.swift */; };
+		9B0E748ADA766E44CA637283 /* PromoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509B9E7601BFEBE77A8E103 /* PromoView.swift */; };
+		ADDC933474E024DD00AF7F41 /* SubjectMatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EA793C87972B24B1C094F8 /* SubjectMatrixView.swift */; };
+		C5AEC3DF548B3FC71457A239 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EF23838627CA33AC1394BC /* RootView.swift */; };
+		D6CA415EF601B238BA29A83C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CDA81148EF2583B31ADEA6 /* ProfileView.swift */; };
+		D82503ADC90D4B4FCF2B8A9B /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D815EAA4A15EB8942461AFB /* ThemeColors.swift */; };
+		E8A674FDC8AFB90795E28003 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F194A2001A3FBB6250412 /* PurchaseManager.swift */; };
+		EDB96B957B2FCC29C53841E1 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D7EF374398E179C687A699 /* DesignSystem.swift */; };
+		EDBADA56565E17BB44B20BD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00472826424FD4B036B492A3 /* Assets.xcassets */; };
+		F64466B165424D5F75E84C6A /* Stage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FB1FD5E33261A3B99C9267 /* Stage.swift */; };
+		F78A7FCC99DCA33243041E15 /* ProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01F150070B8C8759EA817412 /* ProgressManager.swift */; };
+		F8159175684100F744FF422A /* AscentPathView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCCD3A72FDB61F51CA426C93 /* AscentPathView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		E728654B2C7B96843FFC2341 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 1CC5F7A8DE3A71FE3B656484 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B6BD3C78980DC92C5BD7121B;
+			remoteInfo = PolApex;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00472826424FD4B036B492A3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		01EA793C87972B24B1C094F8 /* SubjectMatrixView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectMatrixView.swift; sourceTree = "<group>"; };
+		01F150070B8C8759EA817412 /* ProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressManager.swift; sourceTree = "<group>"; };
+		03DF71447E250A01D376CF21 /* AnswerTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerTemplateView.swift; sourceTree = "<group>"; };
+		2C4F194A2001A3FBB6250412 /* PurchaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseManager.swift; sourceTree = "<group>"; };
+		3108101FBDD42EAC32AFBB15 /* PolApexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolApexApp.swift; sourceTree = "<group>"; };
+		31D7EF374398E179C687A699 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		3A085CBBCB508AE30B3C8D28 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
+		4509B9E7601BFEBE77A8E103 /* PromoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoView.swift; sourceTree = "<group>"; };
+		4799D4AB5007D110090C33B6 /* PoliticsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoliticsModels.swift; sourceTree = "<group>"; };
+		6DB34A56551108A7331B3F37 /* PolApex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolApex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D815EAA4A15EB8942461AFB /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
+		9C212E781575E286690DC42B /* TrapDrillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrapDrillView.swift; sourceTree = "<group>"; };
+		A9EF23838627CA33AC1394BC /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		AEBDADE3661041F73D444609 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		AF1BB0899F28C30FD85508F0 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
+		B012EF863470A6ECF1E865F5 /* ConceptGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptGraphView.swift; sourceTree = "<group>"; };
+		B4CDA81148EF2583B31ADEA6 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		B5D9B2B95E16F15B0CB0F989 /* PolApexTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = PolApexTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3761E3A215CE1C9865006ED /* ReviewScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewScheduler.swift; sourceTree = "<group>"; };
+		CCAA4D3A4DC8D5960CE07A5C /* ExpansionData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpansionData.swift; sourceTree = "<group>"; };
+		CCCD3A72FDB61F51CA426C93 /* AscentPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AscentPathView.swift; sourceTree = "<group>"; };
+		D5BB2BD66299779425A7BEE5 /* PolApexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolApexTests.swift; sourceTree = "<group>"; };
+		D655705D1092C8C4EFA3B9E9 /* PolContentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolContentData.swift; sourceTree = "<group>"; };
+		E3FB1FD5E33261A3B99C9267 /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
+		EA980E098034F30A6536B79E /* ReviewProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewProgressManager.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		0D864B3572E50B9A6D1CDD2F /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				B4CDA81148EF2583B31ADEA6 /* ProfileView.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		19582DE8488F2631AD62163E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4799D4AB5007D110090C33B6 /* PoliticsModels.swift */,
+				E3FB1FD5E33261A3B99C9267 /* Stage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		338C922ACD01A0025317B152 = {
+			isa = PBXGroup;
+			children = (
+				9A807A897172B7BDAD4DE0CF /* PolApex */,
+				927B0C8EE7DC5644841A0A7E /* PolApexTests */,
+				A45D9C4811C1A49195610D97 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		52694637B77A412C497E95D5 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				4509B9E7601BFEBE77A8E103 /* PromoView.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		6333A82C8E752C0680BD0B72 /* AscentPath */ = {
+			isa = PBXGroup;
+			children = (
+				CCCD3A72FDB61F51CA426C93 /* AscentPathView.swift */,
+			);
+			path = AscentPath;
+			sourceTree = "<group>";
+		};
+		7555A6CD049B8F80B5667A72 /* Renderer */ = {
+			isa = PBXGroup;
+			children = (
+				31D7EF374398E179C687A699 /* DesignSystem.swift */,
+				7D815EAA4A15EB8942461AFB /* ThemeColors.swift */,
+			);
+			path = Renderer;
+			sourceTree = "<group>";
+		};
+		8D4E8E5A025BB893E0A5B503 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E5934D7BAD657F47203F39CA /* Engine */,
+				19582DE8488F2631AD62163E /* Models */,
+				7555A6CD049B8F80B5667A72 /* Renderer */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		927B0C8EE7DC5644841A0A7E /* PolApexTests */ = {
+			isa = PBXGroup;
+			children = (
+				D5BB2BD66299779425A7BEE5 /* PolApexTests.swift */,
+			);
+			path = PolApexTests;
+			sourceTree = "<group>";
+		};
+		9A807A897172B7BDAD4DE0CF /* PolApex */ = {
+			isa = PBXGroup;
+			children = (
+				D1C4B42677E246AE76097C73 /* App */,
+				8D4E8E5A025BB893E0A5B503 /* Core */,
+				FE4004CDEC84E929C76B5B4D /* Features */,
+				F677F65D54D382CFE8C41933 /* Resources */,
+			);
+			path = PolApex;
+			sourceTree = "<group>";
+		};
+		A45D9C4811C1A49195610D97 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6DB34A56551108A7331B3F37 /* PolApex.app */,
+				B5D9B2B95E16F15B0CB0F989 /* PolApexTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AB87D8F41A775193BCF95E8B /* Training */ = {
+			isa = PBXGroup;
+			children = (
+				03DF71447E250A01D376CF21 /* AnswerTemplateView.swift */,
+				AF1BB0899F28C30FD85508F0 /* ReviewView.swift */,
+				01EA793C87972B24B1C094F8 /* SubjectMatrixView.swift */,
+				3A085CBBCB508AE30B3C8D28 /* TrainingView.swift */,
+				9C212E781575E286690DC42B /* TrapDrillView.swift */,
+			);
+			path = Training;
+			sourceTree = "<group>";
+		};
+		D1C4B42677E246AE76097C73 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				3108101FBDD42EAC32AFBB15 /* PolApexApp.swift */,
+				A9EF23838627CA33AC1394BC /* RootView.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D813C52CD28918655F9CA3A7 /* Paywall */ = {
+			isa = PBXGroup;
+			children = (
+				AEBDADE3661041F73D444609 /* PaywallView.swift */,
+			);
+			path = Paywall;
+			sourceTree = "<group>";
+		};
+		E5934D7BAD657F47203F39CA /* Engine */ = {
+			isa = PBXGroup;
+			children = (
+				CCAA4D3A4DC8D5960CE07A5C /* ExpansionData.swift */,
+				D655705D1092C8C4EFA3B9E9 /* PolContentData.swift */,
+				01F150070B8C8759EA817412 /* ProgressManager.swift */,
+				2C4F194A2001A3FBB6250412 /* PurchaseManager.swift */,
+				EA980E098034F30A6536B79E /* ReviewProgressManager.swift */,
+				C3761E3A215CE1C9865006ED /* ReviewScheduler.swift */,
+			);
+			path = Engine;
+			sourceTree = "<group>";
+		};
+		F677F65D54D382CFE8C41933 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				00472826424FD4B036B492A3 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		FDF42C6816F727B38049FDE8 /* ConceptGraph */ = {
+			isa = PBXGroup;
+			children = (
+				B012EF863470A6ECF1E865F5 /* ConceptGraphView.swift */,
+			);
+			path = ConceptGraph;
+			sourceTree = "<group>";
+		};
+		FE4004CDEC84E929C76B5B4D /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				6333A82C8E752C0680BD0B72 /* AscentPath */,
+				FDF42C6816F727B38049FDE8 /* ConceptGraph */,
+				52694637B77A412C497E95D5 /* Onboarding */,
+				D813C52CD28918655F9CA3A7 /* Paywall */,
+				0D864B3572E50B9A6D1CDD2F /* Profile */,
+				AB87D8F41A775193BCF95E8B /* Training */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B5D95200BA9D4400CB2738B5 /* PolApexTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0D923A25A4C2938FA11F5038 /* Build configuration list for PBXNativeTarget "PolApexTests" */;
+			buildPhases = (
+				9D2293869586421B9BBA9F5D /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EC6B9A739937F07C74FC7EC3 /* PBXTargetDependency */,
+			);
+			name = PolApexTests;
+			packageProductDependencies = (
+			);
+			productName = PolApexTests;
+			productReference = B5D9B2B95E16F15B0CB0F989 /* PolApexTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		B6BD3C78980DC92C5BD7121B /* PolApex */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 041E7912B741715400A02BF0 /* Build configuration list for PBXNativeTarget "PolApex" */;
+			buildPhases = (
+				9597C7B512D519D52F184D29 /* Sources */,
+				B59DC909C50A7611D0F0577D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PolApex;
+			packageProductDependencies = (
+			);
+			productName = PolApex;
+			productReference = 6DB34A56551108A7331B3F37 /* PolApex.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1CC5F7A8DE3A71FE3B656484 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = D283BDA1B78C7FA3B624486D /* Build configuration list for PBXProject "PolApex" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 338C922ACD01A0025317B152;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A45D9C4811C1A49195610D97 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B6BD3C78980DC92C5BD7121B /* PolApex */,
+				B5D95200BA9D4400CB2738B5 /* PolApexTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B59DC909C50A7611D0F0577D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EDBADA56565E17BB44B20BD0 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9597C7B512D519D52F184D29 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9685187525F60C8802B47F8D /* AnswerTemplateView.swift in Sources */,
+				F8159175684100F744FF422A /* AscentPathView.swift in Sources */,
+				7F21F888EBBA52A797604132 /* ConceptGraphView.swift in Sources */,
+				EDB96B957B2FCC29C53841E1 /* DesignSystem.swift in Sources */,
+				0DF8B77BEED4BE6F1EA3D2AD /* ExpansionData.swift in Sources */,
+				62DAF7F99A43A65B70AC8D82 /* PaywallView.swift in Sources */,
+				281C4DDA429D7D98DAD70DAB /* PolApexApp.swift in Sources */,
+				3C6B543358B67BF9409B469D /* PolContentData.swift in Sources */,
+				7A7DC3FAC679E7F5D3F4CD6F /* PoliticsModels.swift in Sources */,
+				D6CA415EF601B238BA29A83C /* ProfileView.swift in Sources */,
+				F78A7FCC99DCA33243041E15 /* ProgressManager.swift in Sources */,
+				9B0E748ADA766E44CA637283 /* PromoView.swift in Sources */,
+				E8A674FDC8AFB90795E28003 /* PurchaseManager.swift in Sources */,
+				035C9B93C994E81C00C5FE8F /* ReviewProgressManager.swift in Sources */,
+				3411248F7C00C4CD9A866283 /* ReviewScheduler.swift in Sources */,
+				40BDFC3C5EA656FCAFD5620A /* ReviewView.swift in Sources */,
+				C5AEC3DF548B3FC71457A239 /* RootView.swift in Sources */,
+				F64466B165424D5F75E84C6A /* Stage.swift in Sources */,
+				ADDC933474E024DD00AF7F41 /* SubjectMatrixView.swift in Sources */,
+				D82503ADC90D4B4FCF2B8A9B /* ThemeColors.swift in Sources */,
+				4D05A2AB923F0DAD971F7E17 /* TrainingView.swift in Sources */,
+				36ACB8C8F6FBBF4FBC2A16EC /* TrapDrillView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9D2293869586421B9BBA9F5D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				95DF7035F4C67CA5B9F2ACEA /* PolApexTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EC6B9A739937F07C74FC7EC3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B6BD3C78980DC92C5BD7121B /* PolApex */;
+			targetProxy = E728654B2C7B96843FFC2341 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0C0314E6F666A3DFAF1C904E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_LANGUAGE = "zh-Hans";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		80282D6F2DF0B16F39B891EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.polapex.PolApexTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PolApex.app/PolApex";
+			};
+			name = Release;
+		};
+		8C0732D5A1A7A2D3C8D654AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z7F8BY55DS;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PolApex;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.polapex.app;
+				PRODUCT_NAME = PolApex;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B2BEC2E1FA8D19909A3BDF8B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = Z7F8BY55DS;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = PolApex;
+				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.polapex.app;
+				PRODUCT_NAME = PolApex;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		CAB5452C82C856AE8D807661 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_LANGUAGE = "zh-Hans";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MARKETING_VERSION = 1.0.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		F383E5CD82B6FBB7338B26E8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.polapex.PolApexTests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PolApex.app/PolApex";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		041E7912B741715400A02BF0 /* Build configuration list for PBXNativeTarget "PolApex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8C0732D5A1A7A2D3C8D654AF /* Debug */,
+				B2BEC2E1FA8D19909A3BDF8B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0D923A25A4C2938FA11F5038 /* Build configuration list for PBXNativeTarget "PolApexTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F383E5CD82B6FBB7338B26E8 /* Debug */,
+				80282D6F2DF0B16F39B891EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D283BDA1B78C7FA3B624486D /* Build configuration list for PBXProject "PolApex" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0C0314E6F666A3DFAF1C904E /* Debug */,
+				CAB5452C82C856AE8D807661 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1CC5F7A8DE3A71FE3B656484 /* Project object */;
+}

@@ -1,0 +1,41 @@
+{
+  "identifier" : "7CF46C30-B402-49C6-88C2-76F0BCE5D6A8",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "22.00",
+      "familyShareable" : false,
+      "internalID" : "5CB5E721-49B8-4247-8849-D7714D3C6B92",
+      "localizations" : [
+        {
+          "description" : "一次买断，解锁政治登顶全部关卡、材料题答案工厂、概念星图、记忆引擎和秒杀武器库。无订阅、无续费，支持恢复购买。",
+          "displayName" : "完整版解锁",
+          "locale" : "zh_CN"
+        }
+      ],
+      "productID" : "com.polapex.app.full_unlock",
+      "referenceName" : "PolApex Full Unlock",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "0",
+    "_developerTeamID" : "0",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 0,
+    "_locale" : "zh_CN",
+    "_storefront" : "CHN",
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 3,
+    "minor" : 0
+  }
+}
