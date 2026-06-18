@@ -5,35 +5,47 @@ enum Spacing {
     static let sm: CGFloat = 8
     static let md: CGFloat = 12
     static let lg: CGFloat = 16
-    static let xl: CGFloat = 24
-    static let xxl: CGFloat = 36
+    static let xl: CGFloat = 20
+    static let xxl: CGFloat = 28
 }
 
 enum Radius {
-    static let inner: CGFloat = 8
-    static let card: CGFloat = 8
+    static let chip: CGFloat = 8
+    static let inner: CGFloat = 12
+    static let card: CGFloat = 20
+    static let hero: CGFloat = 24
 }
 
 enum AppFont {
-    static let sectionTitle = Font.system(.headline, design: .rounded).weight(.semibold)
-    static let cardTitle = Font.system(.subheadline, design: .rounded).weight(.semibold)
-    static let chip = Font.system(.caption2, design: .rounded).weight(.semibold)
+    static let sectionTitle = Font.headline
+    static let cardTitle = Font.subheadline.weight(.bold)
+    static let body = Font.subheadline
+    static let caption = Font.caption
+    static let chip = Font.system(size: 11, weight: .semibold)
     static func stat(_ size: CGFloat) -> Font {
         Font.system(size: size, weight: .bold, design: .rounded)
+    }
+    static func bigStat(_ size: CGFloat = 30) -> Font {
+        .system(size: size, weight: .bold, design: .rounded)
     }
 }
 
 extension View {
+    func cardShadow() -> some View {
+        shadow(color: .black.opacity(0.06), radius: 12, y: 4)
+            .shadow(color: .black.opacity(0.03), radius: 2, y: 1)
+    }
+
     func cardSurface(padding: CGFloat = Spacing.lg) -> some View {
         self
             .padding(padding)
-            .background(Color.apexSurface)
-            .clipShape(RoundedRectangle(cornerRadius: Radius.card, style: .continuous))
+            .background(Color.apexCardSurface)
+            .cornerRadius(Radius.card)
             .overlay(
-                RoundedRectangle(cornerRadius: Radius.card, style: .continuous)
-                    .stroke(Color.black.opacity(0.055), lineWidth: 1)
+                RoundedRectangle(cornerRadius: Radius.card)
+                    .stroke(Color.black.opacity(0.04), lineWidth: 0.5)
             )
-            .shadow(color: Color.black.opacity(0.035), radius: 8, x: 0, y: 3)
+            .cardShadow()
     }
 
     func readableWidth(_ maxWidth: CGFloat = 760) -> some View {
@@ -44,7 +56,7 @@ extension View {
 
 struct TagChip: View {
     let text: String
-    var color: Color = .apexTeal
+    var color: Color = .apexLava
 
     var body: some View {
         Text(text)
@@ -52,27 +64,26 @@ struct TagChip: View {
             .foregroundColor(color)
             .lineLimit(1)
             .minimumScaleFactor(0.82)
-            .padding(.horizontal, 7)
-            .padding(.vertical, 3)
-            .background(color.opacity(0.12))
-            .clipShape(RoundedRectangle(cornerRadius: 6, style: .continuous))
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(color.opacity(0.15))
+            .clipShape(Capsule())
     }
 }
 
 struct SectionHeader: View {
     let title: String
     var systemImage: String? = nil
-    var accent: Color = .apexTeal
+    var accent: Color = .apexLava
 
     var body: some View {
-        HStack(spacing: Spacing.sm) {
+        HStack(spacing: 6) {
             if let systemImage {
                 Image(systemName: systemImage)
                     .foregroundColor(accent)
             }
             Text(title)
                 .font(AppFont.sectionTitle)
-                .foregroundColor(.apexInk)
             Spacer()
         }
     }

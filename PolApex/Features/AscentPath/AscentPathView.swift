@@ -303,23 +303,7 @@ struct NodeDetailView: View {
         VStack(alignment: .leading, spacing: Spacing.md) {
             SectionHeader(title: "高权重考点", systemImage: "seal", accent: .apexTeal)
             ForEach(MainLineData.coveragePoints(for: node)) { point in
-                VStack(alignment: .leading, spacing: Spacing.sm) {
-                    HStack {
-                        Text(point.title)
-                            .font(AppFont.cardTitle)
-                        TagChip(text: "\(point.grade.rawValue)级", color: .grade(point.grade))
-                        TagChip(text: point.cardType.rawValue, color: .apexBlue)
-                    }
-                    Text(point.detail)
-                        .font(.subheadline)
-                        .foregroundColor(.primary)
-                    if let pitfall = point.pitfall {
-                        Label(pitfall, systemImage: "exclamationmark.triangle")
-                            .font(.caption)
-                            .foregroundColor(.apexDanger)
-                    }
-                }
-                .cardSurface(padding: Spacing.md)
+                KnowledgePointStudyCard(point: point)
             }
         }
     }
@@ -396,6 +380,113 @@ struct NodeDetailView: View {
     }
 }
 
+private struct KnowledgePointStudyCard: View {
+    let point: KnowledgePoint
+    @State private var expandedBlocks: Set<String> = ["必背原文", "白话理解"]
+
+    private var allBlocks: [(title: String, icon: String, color: Color, lines: [String])] {
+        var blocks: [(title: String, icon: String, color: Color, lines: [String])] = []
+        blocks.append((title: "必背原文", icon: "text.book.closed", color: .apexRed, lines: point.mustReciteLines))
+        if !point.explanation.plainExplanation.isEmpty {
+            blocks.append((title: "白话理解", icon: "lightbulb", color: .apexGold, lines: [point.explanation.plainExplanation]))
+        }
+        blocks.append((title: "答题模板", icon: "text.append", color: .apexTeal, lines: point.explanation.answerTemplate))
+        blocks.append((title: "材料触发", icon: "scope", color: .apexBlue, lines: point.explanation.triggerScenes))
+        blocks.append((title: "易混辨析", icon: "arrow.left.arrow.right", color: .apexViolet, lines: point.explanation.confusions))
+        blocks.append((title: "高分答案句", icon: "text.quote", color: .apexEmerald, lines: point.sampleAnswerSentences))
+        blocks.append((title: "扣分提醒", icon: "exclamationmark.triangle", color: .apexDanger, lines: point.commonTrapLines))
+        blocks.append((title: "默写清单", icon: "checkmark.seal", color: .apexTeal, lines: point.explanation.reciteChecklist))
+        return blocks.filter { !$0.lines.isEmpty }
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            HStack(alignment: .top) {
+                VStack(alignment: .leading, spacing: 3) {
+                    Text(point.title)
+                        .font(AppFont.cardTitle)
+                    Text(point.detail)
+                        .font(.subheadline)
+                        .foregroundColor(.primary)
+                }
+                Spacer(minLength: 0)
+                VStack(alignment: .trailing, spacing: 4) {
+                    TagChip(text: "\(point.grade.rawValue)级", color: .grade(point.grade))
+                    TagChip(text: point.cardType.rawValue, color: .apexBlue)
+                    if point.hasDeepExplanation {
+                        TagChip(text: "深度讲解", color: .apexGold)
+                    }
+                }
+            }
+            .padding(.bottom, Spacing.xs)
+
+            if point.hasDeepExplanation {
+                ForEach(allBlocks, id: \.title) { block in
+                    collapsibleBlock(title: block.title, icon: block.icon, color: block.color, lines: block.lines)
+                }
+            } else if let pitfall = point.pitfall {
+                Label(pitfall, systemImage: "exclamationmark.triangle")
+                    .font(.caption)
+                    .foregroundColor(.apexDanger)
+            }
+        }
+        .cardSurface(padding: Spacing.md)
+    }
+
+    @ViewBuilder
+    private func collapsibleBlock(title: String, icon: String, color: Color, lines: [String]) -> some View {
+        let isExpanded = expandedBlocks.contains(title)
+        VStack(alignment: .leading, spacing: Spacing.xs) {
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    if isExpanded {
+                        expandedBlocks.remove(title)
+                    } else {
+                        expandedBlocks.insert(title)
+                    }
+                }
+            } label: {
+                HStack(spacing: Spacing.sm) {
+                    Image(systemName: icon)
+                        .font(.caption)
+                        .foregroundColor(color)
+                        .frame(width: 16)
+                    Text(title)
+                        .font(.subheadline.weight(.semibold))
+                        .foregroundColor(.primary)
+                    Spacer()
+                    Image(systemName: "chevron.down")
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
+                        .rotationEffect(.degrees(isExpanded ? 180 : 0))
+                        .animation(.easeInOut(duration: 0.2), value: isExpanded)
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+            if isExpanded {
+                VStack(alignment: .leading, spacing: Spacing.xs) {
+                    ForEach(Array(lines.enumerated()), id: \.offset) { index, line in
+                        HStack(alignment: .top, spacing: Spacing.sm) {
+                            Text("\(index + 1).")
+                                .font(.caption.weight(.semibold))
+                                .foregroundColor(color)
+                                .frame(width: 20, alignment: .leading)
+                            Text(line)
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+                .padding(.leading, 22)
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+        .padding(.vertical, 4)
+    }
+}
+
 struct QuestionDetailView: View {
     let question: PoliticsQuestion
     @EnvironmentObject var progress: ProgressManager
@@ -412,45 +503,107 @@ struct QuestionDetailView: View {
                         TagChip(text: question.topic.name, color: question.stage.color)
                     }
                 }
-                .cardSurface()
+                .padding(Spacing.lg)
+                .background(Color.apexSurface)
+                .clipShape(RoundedRectangle(cornerRadius: Radius.card))
 
-                ForEach(Array(question.options.enumerated()), id: \.offset) { index, option in
-                    Button {
-                        selectedIndex = index
-                        progress.record(question, correct: index == question.answerIndex)
-                    } label: {
-                        HStack(spacing: Spacing.md) {
-                            Text(String(UnicodeScalar(65 + index)!))
-                                .font(AppFont.cardTitle)
-                                .frame(width: 32, height: 32)
-                                .background(optionColor(index).opacity(0.14))
-                                .foregroundColor(optionColor(index))
-                                .clipShape(RoundedRectangle(cornerRadius: Radius.inner))
-                            Text(option)
-                                .font(.subheadline)
-                                .foregroundColor(.primary)
-                                .multilineTextAlignment(.leading)
-                            Spacer(minLength: 0)
+                VStack(spacing: 0) {
+                    ForEach(Array(question.options.enumerated()), id: \.offset) { index, option in
+                        Button {
+                            selectedIndex = index
+                            progress.record(question, correct: index == question.answerIndex)
+                        } label: {
+                            HStack(spacing: Spacing.md) {
+                                Text(String(UnicodeScalar(65 + index)!))
+                                    .font(.subheadline.weight(.semibold))
+                                    .frame(width: 28, height: 28)
+                                    .background(optionColor(index).opacity(0.14))
+                                    .foregroundColor(optionColor(index))
+                                    .clipShape(Circle())
+                                Text(option)
+                                    .font(.subheadline)
+                                    .foregroundColor(.primary)
+                                    .multilineTextAlignment(.leading)
+                                Spacer(minLength: 0)
+                                if selectedIndex == question.answerIndex && index == question.answerIndex {
+                                    Image(systemName: "checkmark.circle.fill")
+                                        .foregroundColor(.apexEmerald)
+                                } else if selectedIndex == index && index != question.answerIndex {
+                                    Image(systemName: "xmark.circle.fill")
+                                        .foregroundColor(.apexDanger)
+                                }
+                            }
+                            .padding(.vertical, Spacing.md)
+                            .contentShape(Rectangle())
                         }
-                        .cardSurface(padding: Spacing.md)
-                    }
-                    .buttonStyle(.plain)
-                }
+                        .buttonStyle(.plain)
 
-                if selectedIndex != nil {
-                    VStack(alignment: .leading, spacing: Spacing.sm) {
-                        SectionHeader(title: "解析", systemImage: "lightbulb", accent: .apexGold)
-                        Text(question.explanation)
-                            .font(.subheadline)
+                        if index < question.options.count - 1 {
+                            Divider()
+                                .padding(.leading, 40)
+                        }
+                    }
+                }
+                .padding(.horizontal, Spacing.lg)
+                .background(Color.apexSurface)
+                .clipShape(RoundedRectangle(cornerRadius: Radius.card))
+
+                if let selectedIndex {
+                    let isCorrect = selectedIndex == question.answerIndex
+                    VStack(alignment: .leading, spacing: Spacing.md) {
+                        HStack(spacing: Spacing.md) {
+                            Image(systemName: isCorrect ? "checkmark.circle.fill" : "xmark.circle.fill")
+                                .font(.title2)
+                                .foregroundColor(isCorrect ? .apexEmerald : .apexDanger)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(isCorrect ? "答对了！" : "再想想～")
+                                    .font(.headline.weight(.bold))
+                                    .foregroundColor(isCorrect ? .apexEmerald : .apexDanger)
+                                Text(isCorrect ? "陷阱都避开了，很棒！" : "这道题的陷阱很经典，来看看解析。")
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                            Spacer()
+                        }
+
+                        VStack(alignment: .leading, spacing: Spacing.sm) {
+                            Label("解析", systemImage: "lightbulb.fill")
+                                .font(.subheadline.weight(.semibold))
+                                .foregroundColor(.apexGold)
+                            Text(question.explanation)
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                        }
+
                         if !question.trapTags.isEmpty {
-                            HStack {
+                            HStack(spacing: Spacing.sm) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(.apexDanger)
+                                    .font(.caption)
                                 ForEach(question.trapTags, id: \.self) { tag in
                                     TagChip(text: tag, color: .apexDanger)
                                 }
                             }
                         }
+
+                        if let weapon = question.weapon {
+                            HStack(spacing: Spacing.sm) {
+                                Image(systemName: weapon.icon)
+                                    .foregroundColor(.apexMystery)
+                                Text(weapon.rawValue)
+                                    .font(.subheadline.weight(.medium))
+                                    .foregroundColor(.apexMystery)
+                                Spacer()
+                            }
+                            .padding(.horizontal, Spacing.md)
+                            .padding(.vertical, Spacing.sm)
+                            .background(Color.apexMystery.opacity(0.1))
+                            .clipShape(RoundedRectangle(cornerRadius: Radius.inner))
+                        }
                     }
-                    .cardSurface()
+                    .padding(Spacing.lg)
+                    .background(Color.apexSurface)
+                    .clipShape(RoundedRectangle(cornerRadius: Radius.card))
                 }
             }
             .padding(Spacing.lg)

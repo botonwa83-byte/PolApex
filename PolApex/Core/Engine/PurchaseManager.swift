@@ -1,6 +1,13 @@
 import StoreKit
 import SwiftUI
 
+// MARK: - 完整功能解锁 IAP（StoreKit 2 · 一次性买断）
+//
+// 产品 ID：com.polapex.app.full_unlock（¥22 一次性买断，价格以 App Store Connect 为准）
+// 免费档：初中道法主线 9 关 + 少量武器 / 材料案例 / Boss 双解，用来体验背诵和材料切片。
+// 解锁后：高中必修、选必、冲刺主线，高考比例套练，非选择题题型池，材料切片，主体矩阵，Boss 双解和复习闭环。
+// 本地测试：PolApex.storekit 已挂到 scheme，可直接验证购买 / 恢复流程。
+
 final class PurchaseManager: ObservableObject {
     static let shared = PurchaseManager()
 
@@ -75,7 +82,7 @@ final class PurchaseManager: ObservableObject {
             case .userCancelled:
                 break
             case .pending:
-                errorMessage = "购买待处理，完成后会自动解锁"
+                errorMessage = "购买待处理（可能需要家长确认），完成后会自动解锁"
             @unknown default:
                 break
             }
@@ -121,4 +128,11 @@ final class PurchaseManager: ObservableObject {
         case .verified(let value): return value
         }
     }
+
+    #if DEBUG
+    @MainActor func debugToggle() {
+        isUnlocked.toggle()
+        UserDefaults.standard.set(isUnlocked, forKey: storageKey)
+    }
+    #endif
 }

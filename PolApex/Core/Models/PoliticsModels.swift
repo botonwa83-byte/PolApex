@@ -59,6 +59,26 @@ enum RecallMode: String, Codable, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
+enum SubjectiveQuestionType: String, Codable, CaseIterable, Identifiable {
+    case materialAnalysis = "材料分析题"
+    case measure = "措施题"
+    case significance = "意义题"
+    case evaluation = "评析题"
+    case openInquiry = "开放探究题"
+
+    var id: String { rawValue }
+
+    var shortName: String {
+        switch self {
+        case .materialAnalysis: return "分析"
+        case .measure: return "措施"
+        case .significance: return "意义"
+        case .evaluation: return "评析"
+        case .openInquiry: return "探究"
+        }
+    }
+}
+
 enum PoliticsTopic: String, Codable, CaseIterable, Identifiable {
     case juniorGrowth
     case juniorLaw
@@ -196,6 +216,42 @@ struct KnowledgePoint: Codable, Identifiable {
     let cardType: MemoryCardType
     var pitfall: String? = nil
     var keywords: [String] = []
+    var explanation: KnowledgeExplanation = KnowledgeExplanation()
+
+    var hasDeepExplanation: Bool { explanation.hasDepth }
+    var mustReciteLines: [String] { explanation.mustRecite.isEmpty ? [detail] : explanation.mustRecite }
+    var sampleAnswerSentences: [String] {
+        explanation.sampleAnswerSentences.isEmpty ? [detail] : explanation.sampleAnswerSentences
+    }
+    var commonTrapLines: [String] {
+        var lines = explanation.commonTraps
+        if let pitfall, !pitfall.isEmpty {
+            lines.insert(pitfall, at: 0)
+        }
+        return lines
+    }
+}
+
+struct KnowledgeExplanation: Codable, Equatable {
+    var mustRecite: [String] = []
+    var plainExplanation: String = ""
+    var answerTemplate: [String] = []
+    var triggerScenes: [String] = []
+    var confusions: [String] = []
+    var commonTraps: [String] = []
+    var sampleAnswerSentences: [String] = []
+    var reciteChecklist: [String] = []
+
+    var hasDepth: Bool {
+        !mustRecite.isEmpty ||
+        !plainExplanation.isEmpty ||
+        !answerTemplate.isEmpty ||
+        !triggerScenes.isEmpty ||
+        !confusions.isEmpty ||
+        !commonTraps.isEmpty ||
+        !sampleAnswerSentences.isEmpty ||
+        !reciteChecklist.isEmpty
+    }
 }
 
 struct LearningNode: Codable, Identifiable {
@@ -209,6 +265,14 @@ struct LearningNode: Codable, Identifiable {
     let practiceIds: [String]
     var bossCaseId: String? = nil
     var weaponUnlocked: PoliticsWeapon? = nil
+
+    var allPracticeIds: [String] {
+        MainLineData.coveragePoints(for: self).flatMap { point in
+            (0..<QuestionBank.questionCount(for: point.grade)).map { variant in
+                "q_\(id)_\(point.id)_\(variant)"
+            }
+        }
+    }
 }
 
 enum NodeState {
@@ -236,10 +300,34 @@ struct SubjectiveQuestion: Identifiable {
     let nodeId: String
     let knowledgeId: String
     let grade: ImportanceGrade
+    let questionType: SubjectiveQuestionType
+    let score: Int
     let material: String
     let prompt: String
     let answerPoints: [String]
     let diagnostics: [String]
+
+    init(id: String,
+         nodeId: String,
+         knowledgeId: String,
+         grade: ImportanceGrade,
+         questionType: SubjectiveQuestionType = .materialAnalysis,
+         score: Int = 13,
+         material: String,
+         prompt: String,
+         answerPoints: [String],
+         diagnostics: [String]) {
+        self.id = id
+        self.nodeId = nodeId
+        self.knowledgeId = knowledgeId
+        self.grade = grade
+        self.questionType = questionType
+        self.score = score
+        self.material = material
+        self.prompt = prompt
+        self.answerPoints = answerPoints
+        self.diagnostics = diagnostics
+    }
 }
 
 struct SolutionPath: Codable {

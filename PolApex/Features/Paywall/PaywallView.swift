@@ -1,77 +1,150 @@
 import SwiftUI
 
 struct PaywallView: View {
-    @Environment(\.dismiss) private var dismiss
     @ObservedObject private var purchase = PurchaseManager.shared
+    @Environment(\.dismiss) private var dismiss
+
+    private var priceLabel: String { purchase.product?.displayPrice ?? "¥22" }
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: Spacing.lg) {
-                    VStack(alignment: .leading, spacing: Spacing.sm) {
-                        Image(systemName: "crown.fill")
-                            .font(.largeTitle)
-                            .foregroundColor(.apexGold)
-                        Text("PolApex 完整版")
-                            .font(.title.weight(.bold))
-                        Text("一次买断，解锁完整政治高考冲刺系统。")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
-                    .cardSurface()
+        ScrollView {
+            VStack(spacing: 0) {
+                heroArea
 
-                    VStack(alignment: .leading, spacing: Spacing.md) {
-                        feature("全部 \(MainLineData.nodes.count) 关登顶之路")
-                        feature("\(MainLineData.allKnowledgePoints.count) 个考点全覆盖")
-                        feature("\(QuestionBank.all.count) 道按权重生成的选择题")
-                        feature("\(SubjectiveQuestionData.all.count) 道 S/A 主观题")
-                        feature("\(WeaponGuideData.all.count) 把政治答题武器")
-                    }
-                    .cardSurface()
-
-                    Button {
-                        Task { await purchase.purchase() }
-                    } label: {
-                        Text(purchase.isPurchasing ? "处理中..." : "解锁 \(purchase.product?.displayPrice ?? "¥22")")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 14)
-                            .background(Color.apexRed)
-                            .clipShape(RoundedRectangle(cornerRadius: Radius.card))
-                    }
-                    .disabled(purchase.isPurchasing)
-
-                    Button {
-                        Task { await purchase.restore() }
-                    } label: {
-                        Text("恢复购买")
-                            .font(.subheadline)
-                            .frame(maxWidth: .infinity)
-                    }
-
-                    if let message = purchase.errorMessage {
-                        Text(message)
-                            .font(.caption)
-                            .foregroundColor(.apexDanger)
+                VStack(alignment: .leading, spacing: 14) {
+                    ForEach(PremiumContentPlan.heroBenefits) { benefit in
+                        benefitRow(benefit)
                     }
                 }
-                .padding(Spacing.lg)
-                .readableWidth(560)
-            }
-            .background(Color.apexBackground.ignoresSafeArea())
-            .navigationTitle("完整版")
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("关闭") { dismiss() }
+                .padding(.horizontal, 24)
+                .padding(.top, 28)
+                .padding(.bottom, 20)
+
+                Divider()
+                    .padding(.horizontal, 24)
+
+                VStack(spacing: 6) {
+                    Text(PremiumContentPlan.freeSummary)
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                        .multilineTextAlignment(.center)
+                    Text("先用免费初中主线体验背诵和材料切片，再解锁高中提分闭环。")
+                        .font(.footnote.weight(.medium))
+                        .foregroundColor(.apexLava)
+                        .multilineTextAlignment(.center)
                 }
+                .padding(.vertical, 16)
+                .padding(.horizontal, 24)
+
+                purchaseButton
+                    .padding(.horizontal, 24)
+
+                Button { Task { await purchase.restore() } } label: {
+                    Text("恢复购买")
+                        .font(.footnote)
+                        .foregroundColor(.secondary)
+                        .underline()
+                }
+                .padding(.top, 12)
+                .disabled(purchase.isPurchasing)
+
+                if let message = purchase.errorMessage {
+                    Text(message)
+                        .font(.caption)
+                        .foregroundColor(.apexDanger)
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal, 24)
+                        .padding(.top, 8)
+                }
+
+                #if DEBUG
+                Button("（调试）本地解锁") { purchase.debugToggle() }
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+                    .padding(.top, 10)
+                #endif
+
+                Text("购买通过 Apple 账户完成。\(PremiumContentPlan.paywallFootnote)")
+                    .font(.system(size: 10))
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 28)
+                    .padding(.top, 16)
+                    .padding(.bottom, 32)
             }
+        }
+        .background(Color.apexBackground.ignoresSafeArea())
+        .onChange(of: purchase.isUnlocked) { unlocked in
+            if unlocked { dismiss() }
         }
     }
 
-    private func feature(_ text: String) -> some View {
-        Label(text, systemImage: "checkmark.circle.fill")
-            .font(.subheadline)
-            .foregroundColor(.primary)
+    private var heroArea: some View {
+        ZStack {
+            LinearGradient(colors: [.apexLava, .apexMystery],
+                           startPoint: .topLeading,
+                           endPoint: .bottomTrailing)
+            VStack(spacing: 10) {
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 44))
+                    .foregroundColor(.white)
+                Text("解锁政治登顶完整版")
+                    .font(.system(size: 24, weight: .black, design: .rounded))
+                    .foregroundColor(.white)
+                Text(PremiumContentPlan.tagline)
+                    .font(.subheadline)
+                    .foregroundColor(.white.opacity(0.9))
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal, 28)
+            }
+            .padding(.vertical, 40)
+        }
+    }
+
+    private var purchaseButton: some View {
+        Button { Task { await purchase.purchase() } } label: {
+            HStack(spacing: 10) {
+                if purchase.isPurchasing {
+                    ProgressView()
+                        .tint(.white)
+                } else {
+                    Image(systemName: "lock.open.fill")
+                }
+                Text(purchase.isPurchasing ? "处理中..." : "立即解锁 \(priceLabel)")
+                    .fontWeight(.bold)
+            }
+            .font(.headline)
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 16)
+            .background(LinearGradient(colors: [.apexLava, .apexMystery],
+                                       startPoint: .leading,
+                                       endPoint: .trailing))
+            .clipShape(RoundedRectangle(cornerRadius: Radius.card, style: .continuous))
+            .shadow(color: Color.apexLava.opacity(0.3), radius: 10, y: 4)
+        }
+        .disabled(purchase.isPurchasing)
+    }
+
+    private func benefitRow(_ benefit: PremiumBenefit) -> some View {
+        HStack(alignment: .top, spacing: 14) {
+            ZStack {
+                RoundedRectangle(cornerRadius: Radius.inner, style: .continuous)
+                    .fill(benefit.color.opacity(0.15))
+                    .frame(width: 38, height: 38)
+                Image(systemName: benefit.icon)
+                    .font(.subheadline)
+                    .foregroundColor(benefit.color)
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(benefit.title)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundColor(.primary)
+                Text(benefit.detail)
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
+            Spacer(minLength: 0)
+        }
     }
 }

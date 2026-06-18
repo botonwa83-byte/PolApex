@@ -29,6 +29,8 @@ struct SubjectMatrixView: View {
 
 struct SubjectDetailView: View {
     let subject: SubjectResponsibility
+    private var choiceQuestions: [PoliticsQuestion] { PracticeLinker.choiceQuestions(for: subject) }
+    private var subjectiveQuestions: [SubjectiveQuestion] { PracticeLinker.subjectiveQuestions(for: subject) }
 
     var body: some View {
         ScrollView {
@@ -69,6 +71,8 @@ struct SubjectDetailView: View {
                     }
                 }
                 .cardSurface()
+
+                practiceBlock
             }
             .padding(Spacing.lg)
             .readableWidth()
@@ -76,6 +80,37 @@ struct SubjectDetailView: View {
         .background(Color.apexBackground.ignoresSafeArea())
         .navigationTitle("主体详情")
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private var practiceBlock: some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            SectionHeader(title: "关联练习", systemImage: "pencil.and.list.clipboard", accent: .apexBlue)
+            ForEach(choiceQuestions.prefix(5)) { question in
+                NavigationLink { QuestionDetailView(question: question) } label: {
+                    practiceLine(question.prompt, subtitle: "选择题", color: .apexBlue)
+                }
+                .buttonStyle(.plain)
+            }
+            ForEach(subjectiveQuestions.prefix(3)) { question in
+                NavigationLink { SubjectiveQuestionDetailView(item: question) } label: {
+                    practiceLine(question.prompt, subtitle: "主观题", color: .apexRed)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .cardSurface()
+    }
+
+    private func practiceLine(_ title: String, subtitle: String, color: Color) -> some View {
+        HStack(spacing: Spacing.md) {
+            TagChip(text: subtitle, color: color)
+            Text(title)
+                .font(.subheadline)
+                .foregroundColor(.primary)
+                .lineLimit(2)
+            Spacer(minLength: 0)
+        }
+        .padding(.vertical, 3)
     }
 
     private func bulletBlock(_ title: String, icon: String, color: Color, items: [String]) -> some View {

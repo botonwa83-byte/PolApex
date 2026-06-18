@@ -8,8 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		035C9B93C994E81C00C5FE8F /* ReviewProgressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA980E098034F30A6536B79E /* ReviewProgressManager.swift */; };
+		0B91D3038BCCFBF838E655C2 /* AuthoredPracticeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4138FBE7C14D1BAC9F7F565D /* AuthoredPracticeData.swift */; };
 		0DF8B77BEED4BE6F1EA3D2AD /* ExpansionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCAA4D3A4DC8D5960CE07A5C /* ExpansionData.swift */; };
 		281C4DDA429D7D98DAD70DAB /* PolApexApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3108101FBDD42EAC32AFBB15 /* PolApexApp.swift */; };
+		2A5E8FCA5BF0EECECACB8F5D /* PracticeLinker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F275FBFFE0C77C242136AC87 /* PracticeLinker.swift */; };
 		3411248F7C00C4CD9A866283 /* ReviewScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3761E3A215CE1C9865006ED /* ReviewScheduler.swift */; };
 		36ACB8C8F6FBBF4FBC2A16EC /* TrapDrillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C212E781575E286690DC42B /* TrapDrillView.swift */; };
 		3C6B543358B67BF9409B469D /* PolContentData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D655705D1092C8C4EFA3B9E9 /* PolContentData.swift */; };
@@ -21,10 +23,12 @@
 		95DF7035F4C67CA5B9F2ACEA /* PolApexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BB2BD66299779425A7BEE5 /* PolApexTests.swift */; };
 		9685187525F60C8802B47F8D /* AnswerTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03DF71447E250A01D376CF21 /* AnswerTemplateView.swift */; };
 		9B0E748ADA766E44CA637283 /* PromoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4509B9E7601BFEBE77A8E103 /* PromoView.swift */; };
+		A22811296C9910A8DC664F9C /* PremiumContentPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE9015C1A04B9161BC7D2D3B /* PremiumContentPlan.swift */; };
 		ADDC933474E024DD00AF7F41 /* SubjectMatrixView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01EA793C87972B24B1C094F8 /* SubjectMatrixView.swift */; };
 		C5AEC3DF548B3FC71457A239 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EF23838627CA33AC1394BC /* RootView.swift */; };
 		D6CA415EF601B238BA29A83C /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4CDA81148EF2583B31ADEA6 /* ProfileView.swift */; };
 		D82503ADC90D4B4FCF2B8A9B /* ThemeColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D815EAA4A15EB8942461AFB /* ThemeColors.swift */; };
+		DF22D11616704765B41625C1 /* ExamPracticeBlueprint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0AA75DFCF00DC841AEF0111 /* ExamPracticeBlueprint.swift */; };
 		E8A674FDC8AFB90795E28003 /* PurchaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4F194A2001A3FBB6250412 /* PurchaseManager.swift */; };
 		EDB96B957B2FCC29C53841E1 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31D7EF374398E179C687A699 /* DesignSystem.swift */; };
 		EDBADA56565E17BB44B20BD0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00472826424FD4B036B492A3 /* Assets.xcassets */; };
@@ -52,12 +56,14 @@
 		3108101FBDD42EAC32AFBB15 /* PolApexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolApexApp.swift; sourceTree = "<group>"; };
 		31D7EF374398E179C687A699 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		3A085CBBCB508AE30B3C8D28 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
+		4138FBE7C14D1BAC9F7F565D /* AuthoredPracticeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthoredPracticeData.swift; sourceTree = "<group>"; };
 		4509B9E7601BFEBE77A8E103 /* PromoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoView.swift; sourceTree = "<group>"; };
 		4799D4AB5007D110090C33B6 /* PoliticsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoliticsModels.swift; sourceTree = "<group>"; };
 		6DB34A56551108A7331B3F37 /* PolApex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolApex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D815EAA4A15EB8942461AFB /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		9C212E781575E286690DC42B /* TrapDrillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrapDrillView.swift; sourceTree = "<group>"; };
 		A9EF23838627CA33AC1394BC /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		AE9015C1A04B9161BC7D2D3B /* PremiumContentPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumContentPlan.swift; sourceTree = "<group>"; };
 		AEBDADE3661041F73D444609 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		AF1BB0899F28C30FD85508F0 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		B012EF863470A6ECF1E865F5 /* ConceptGraphView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConceptGraphView.swift; sourceTree = "<group>"; };
@@ -68,8 +74,10 @@
 		CCCD3A72FDB61F51CA426C93 /* AscentPathView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AscentPathView.swift; sourceTree = "<group>"; };
 		D5BB2BD66299779425A7BEE5 /* PolApexTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolApexTests.swift; sourceTree = "<group>"; };
 		D655705D1092C8C4EFA3B9E9 /* PolContentData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolContentData.swift; sourceTree = "<group>"; };
+		E0AA75DFCF00DC841AEF0111 /* ExamPracticeBlueprint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExamPracticeBlueprint.swift; sourceTree = "<group>"; };
 		E3FB1FD5E33261A3B99C9267 /* Stage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stage.swift; sourceTree = "<group>"; };
 		EA980E098034F30A6536B79E /* ReviewProgressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewProgressManager.swift; sourceTree = "<group>"; };
+		F275FBFFE0C77C242136AC87 /* PracticeLinker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeLinker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -194,8 +202,12 @@
 		E5934D7BAD657F47203F39CA /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				4138FBE7C14D1BAC9F7F565D /* AuthoredPracticeData.swift */,
+				E0AA75DFCF00DC841AEF0111 /* ExamPracticeBlueprint.swift */,
 				CCAA4D3A4DC8D5960CE07A5C /* ExpansionData.swift */,
 				D655705D1092C8C4EFA3B9E9 /* PolContentData.swift */,
+				F275FBFFE0C77C242136AC87 /* PracticeLinker.swift */,
+				AE9015C1A04B9161BC7D2D3B /* PremiumContentPlan.swift */,
 				01F150070B8C8759EA817412 /* ProgressManager.swift */,
 				2C4F194A2001A3FBB6250412 /* PurchaseManager.swift */,
 				EA980E098034F30A6536B79E /* ReviewProgressManager.swift */,
@@ -319,13 +331,17 @@
 			files = (
 				9685187525F60C8802B47F8D /* AnswerTemplateView.swift in Sources */,
 				F8159175684100F744FF422A /* AscentPathView.swift in Sources */,
+				0B91D3038BCCFBF838E655C2 /* AuthoredPracticeData.swift in Sources */,
 				7F21F888EBBA52A797604132 /* ConceptGraphView.swift in Sources */,
 				EDB96B957B2FCC29C53841E1 /* DesignSystem.swift in Sources */,
+				DF22D11616704765B41625C1 /* ExamPracticeBlueprint.swift in Sources */,
 				0DF8B77BEED4BE6F1EA3D2AD /* ExpansionData.swift in Sources */,
 				62DAF7F99A43A65B70AC8D82 /* PaywallView.swift in Sources */,
 				281C4DDA429D7D98DAD70DAB /* PolApexApp.swift in Sources */,
 				3C6B543358B67BF9409B469D /* PolContentData.swift in Sources */,
 				7A7DC3FAC679E7F5D3F4CD6F /* PoliticsModels.swift in Sources */,
+				2A5E8FCA5BF0EECECACB8F5D /* PracticeLinker.swift in Sources */,
+				A22811296C9910A8DC664F9C /* PremiumContentPlan.swift in Sources */,
 				D6CA415EF601B238BA29A83C /* ProfileView.swift in Sources */,
 				F78A7FCC99DCA33243041E15 /* ProgressManager.swift in Sources */,
 				9B0E748ADA766E44CA637283 /* PromoView.swift in Sources */,

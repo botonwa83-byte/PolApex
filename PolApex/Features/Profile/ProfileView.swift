@@ -3,6 +3,7 @@ import SwiftUI
 struct MoreView: View {
     @EnvironmentObject var progress: ProgressManager
     @ObservedObject private var purchase = PurchaseManager.shared
+    @ObservedObject private var appearance = AppearanceManager.shared
     @State private var showPaywall = false
 
     var body: some View {
@@ -15,12 +16,13 @@ struct MoreView: View {
                                 Image(systemName: "crown.fill")
                                     .foregroundColor(.apexGold)
                                 VStack(alignment: .leading, spacing: 2) {
-                                    Text("解锁完整版")
+                                    Text(PremiumContentPlan.title)
                                         .font(.headline)
                                         .foregroundColor(.primary)
-                                    Text("全部考点、主观题、武器和后续更新")
+                                    Text(PremiumContentPlan.unlockSummary)
                                         .font(.caption)
                                         .foregroundColor(.secondary)
+                                        .lineLimit(2)
                                 }
                                 Spacer()
                                 Image(systemName: "chevron.right")
@@ -102,6 +104,14 @@ struct MoreView: View {
                         Spacer()
                         Text("\(SubjectiveQuestionData.all.count)")
                             .foregroundColor(.secondary)
+                    }
+                }
+
+                Section("外观") {
+                    Picker("外观模式", selection: $appearance.preference) {
+                        ForEach(AppearancePreference.allCases) { pref in
+                            Label(pref.label, systemImage: pref.icon).tag(pref)
+                        }
                     }
                 }
             }
@@ -229,6 +239,10 @@ private struct WeaponRow: View {
                 Text(guide.tagline)
                     .font(.caption)
                     .foregroundColor(.secondary)
+                HStack(spacing: Spacing.sm) {
+                    TagChip(text: "\(PracticeLinker.choiceQuestions(for: guide).count) 选择题", color: .apexBlue)
+                    TagChip(text: "\(PracticeLinker.subjectiveQuestions(for: guide).count) 主观题", color: .apexTeal)
+                }
             }
             Spacer()
         }
@@ -238,6 +252,8 @@ private struct WeaponRow: View {
 
 struct WeaponDetailView: View {
     let guide: WeaponGuide
+    private var choiceQuestions: [PoliticsQuestion] { PracticeLinker.choiceQuestions(for: guide) }
+    private var subjectiveQuestions: [SubjectiveQuestion] { PracticeLinker.subjectiveQuestions(for: guide) }
 
     var body: some View {
         ScrollView {
@@ -256,6 +272,8 @@ struct WeaponDetailView: View {
 
                 bulletBlock("何时用", icon: "scope", color: .apexGold, items: guide.whenToUse)
                 bulletBlock("怎么用", icon: "list.number", color: .apexTeal, items: guide.steps)
+                choicePracticeBlock(title: "关联选择题", questions: Array(choiceQuestions.prefix(8)))
+                subjectivePracticeBlock(title: "关联主观题", questions: Array(subjectiveQuestions.prefix(6)))
 
                 if let id = guide.exampleCaseId, let duel = BossDuelData.duel(id: id) {
                     NavigationLink { DuelDetailView(duel: duel) } label: {
@@ -298,6 +316,53 @@ struct WeaponDetailView: View {
         }
         .cardSurface()
     }
+
+    private func choicePracticeBlock(title: String, questions: [PoliticsQuestion]) -> some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            SectionHeader(title: title, systemImage: "checkmark.seal", accent: .apexBlue)
+            ForEach(questions) { question in
+                NavigationLink { QuestionDetailView(question: question) } label: {
+                    practiceRow(question.prompt, subtitle: MainLineData.knowledge(id: question.knowledgeId)?.title, color: .apexBlue)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .cardSurface()
+    }
+
+    private func subjectivePracticeBlock(title: String, questions: [SubjectiveQuestion]) -> some View {
+        VStack(alignment: .leading, spacing: Spacing.sm) {
+            SectionHeader(title: title, systemImage: "text.append", accent: .apexRed)
+            ForEach(questions) { question in
+                NavigationLink { SubjectiveQuestionDetailView(item: question) } label: {
+                    practiceRow(question.prompt, subtitle: MainLineData.knowledge(id: question.knowledgeId)?.title, color: .apexRed)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .cardSurface()
+    }
+
+    private func practiceRow(_ title: String, subtitle: String?, color: Color) -> some View {
+        HStack(spacing: Spacing.md) {
+            Image(systemName: "arrow.right.circle")
+                .foregroundColor(color)
+                .frame(width: 24)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.subheadline)
+                    .foregroundColor(.primary)
+                    .lineLimit(2)
+                if let subtitle {
+                    Text(subtitle)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.vertical, 4)
+    }
 }
 
 struct DuelListView: View {
@@ -335,6 +400,7 @@ struct DuelListView: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
                     .lineLimit(1)
+                TagChip(text: "\(PracticeLinker.choiceQuestions(for: duel).count) 关联题", color: .apexBlue)
             }
             Spacer()
         }

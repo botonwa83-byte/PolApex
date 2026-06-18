@@ -10,13 +10,13 @@
       "internalID" : "5CB5E721-49B8-4247-8849-D7714D3C6B92",
       "localizations" : [
         {
-          "description" : "一次买断，解锁政治登顶全部关卡、材料题答案工厂、概念星图、记忆引擎和秒杀武器库。无订阅、无续费，支持恢复购买。",
-          "displayName" : "完整版解锁",
+          "description" : "一次买断，解锁政治登顶高中必修、选必、冲刺主线，高考比例套练，非选择题题型池，材料题答案工厂、主体矩阵、Boss 双解和复习闭环。无订阅、无续费，支持恢复购买。",
+          "displayName" : "PolApex 完整版解锁",
           "locale" : "zh_CN"
         }
       ],
       "productID" : "com.polapex.app.full_unlock",
-      "referenceName" : "PolApex Full Unlock",
+      "referenceName" : "完整功能解锁（一次性买断）",
       "type" : "NonConsumable"
     }
   ],

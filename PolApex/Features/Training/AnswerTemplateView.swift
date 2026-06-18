@@ -24,6 +24,8 @@ struct AnswerTemplateView: View {
 
 struct AnswerTemplateDetailView: View {
     let item: AnswerTemplate
+    private var choiceQuestions: [PoliticsQuestion] { PracticeLinker.choiceQuestions(for: item) }
+    private var subjectiveQuestions: [SubjectiveQuestion] { PracticeLinker.subjectiveQuestions(for: item) }
 
     var body: some View {
         ScrollView {
@@ -47,6 +49,23 @@ struct AnswerTemplateDetailView: View {
                         .font(.body)
                 }
                 .cardSurface()
+
+                VStack(alignment: .leading, spacing: Spacing.sm) {
+                    SectionHeader(title: "套模板练习", systemImage: "pencil.and.list.clipboard", accent: .apexRed)
+                    ForEach(subjectiveQuestions.prefix(5)) { question in
+                        NavigationLink { SubjectiveQuestionDetailView(item: question) } label: {
+                            practiceLine(question.prompt, subtitle: "主观题", color: .apexRed)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                    ForEach(choiceQuestions.prefix(4)) { question in
+                        NavigationLink { QuestionDetailView(question: question) } label: {
+                            practiceLine(question.prompt, subtitle: "选择题", color: .apexBlue)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .cardSurface()
             }
             .padding(Spacing.lg)
             .readableWidth()
@@ -65,5 +84,17 @@ struct AnswerTemplateDetailView: View {
             }
         }
         .cardSurface()
+    }
+
+    private func practiceLine(_ title: String, subtitle: String, color: Color) -> some View {
+        HStack(spacing: Spacing.md) {
+            TagChip(text: subtitle, color: color)
+            Text(title)
+                .font(.subheadline)
+                .foregroundColor(.primary)
+                .lineLimit(2)
+            Spacer(minLength: 0)
+        }
+        .padding(.vertical, 3)
     }
 }

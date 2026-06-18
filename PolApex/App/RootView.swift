@@ -45,6 +45,6 @@ struct MainTabView: View {
                 .tabItem { Label("更多", systemImage: "ellipsis.circle") }
                 .tag(3)
         }
-        .tint(.apexTeal)
+        .tint(.apexLava)
     }
 }

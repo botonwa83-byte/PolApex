@@ -102,6 +102,21 @@ struct TrapDrillDetailView: View {
                     }
                 }
                 .cardSurface()
+
+                VStack(alignment: .leading, spacing: Spacing.sm) {
+                    SectionHeader(title: "关联选择题", systemImage: "checkmark.seal", accent: .apexBlue)
+                    ForEach(PracticeLinker.choiceQuestions(for: drill).prefix(4)) { question in
+                        NavigationLink { QuestionDetailView(question: question) } label: {
+                            Text(question.prompt)
+                                .font(.subheadline)
+                                .foregroundColor(.primary)
+                                .lineLimit(2)
+                                .padding(.vertical, 3)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .cardSurface()
             }
             .padding(Spacing.lg)
             .readableWidth()
