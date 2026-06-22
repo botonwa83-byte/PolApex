@@ -165,6 +165,39 @@ final class PolApexTests: XCTestCase {
         }
     }
 
+    func testAuthoredQuestionsReferenceTheirDeclaredNode() {
+        var home: [String: String] = [:]
+        for node in MainLineData.nodes {
+            for point in MainLineData.coveragePoints(for: node) {
+                home[point.id] = node.id
+            }
+        }
+        for question in AuthoredQuestionData.all {
+            XCTAssertEqual(home[question.knowledgeId], question.nodeId,
+                           "人工选择题 \(question.id) 的 knowledgeId \(question.knowledgeId) 实际归属节点与声明的 nodeId 不一致")
+        }
+        for question in AuthoredSubjectiveQuestionData.all {
+            XCTAssertEqual(home[question.knowledgeId], question.nodeId,
+                           "人工非选择题 \(question.id) 的 knowledgeId \(question.knowledgeId) 实际归属节点与声明的 nodeId 不一致")
+        }
+    }
+
+    func testBLevelPointsHaveDeepExplanations() {
+        let allBPoints = MainLineData.allKnowledgePoints.filter { $0.grade == .b }
+        let points = allBPoints.filter(\.hasDeepExplanation)
+        XCTAssertEqual(points.count, allBPoints.count, "所有 B 级考点都必须有深度讲解")
+        XCTAssertGreaterThanOrEqual(points.count, 26, "B 级深度讲解数量异常")
+
+        for point in points {
+            XCTAssertGreaterThanOrEqual(point.mustReciteLines.count, 3, "B 级考点 \(point.id) 必背句不足")
+            XCTAssertGreaterThanOrEqual(point.sampleAnswerSentences.count, 2, "B 级考点 \(point.id) 高分答案句不足")
+            XCTAssertGreaterThanOrEqual(point.commonTrapLines.count + point.explanation.confusions.count, 2,
+                                        "B 级考点 \(point.id) 易错/易混信息不足")
+            XCTAssertFalse(point.explanation.plainExplanation.isEmpty, "B 级考点 \(point.id) 缺白话理解")
+            XCTAssertFalse(point.explanation.answerTemplate.isEmpty, "B 级考点 \(point.id) 缺答题模板")
+        }
+    }
+
     func testDeepExplanationsImproveGeneratedTrainingContent() {
         let deepPoint = MainLineData.allKnowledgePoints.first { $0.id == "k1601" }
         XCTAssertNotNil(deepPoint)
@@ -345,5 +378,38 @@ final class PolApexTests: XCTestCase {
         state = manager.state(for: card)
         XCTAssertEqual(state.level, 0)
         XCTAssertEqual(state.wrongCount, 1)
+    }
+
+    func testGaokaoCoverageGapsAreFilled() {
+        let searchableText = MainLineData.allKnowledgePoints.map { "\($0.title) \($0.detail)" }
+        let mustCoverKeywords = [
+            "新发展理念",
+            "新质生产力",
+            "国家的本质与结构形式",
+            "国际组织体系",
+            "婚姻家庭与继承",
+            "哲学的基本问题",
+            "价值的创造与实现",
+            "辩证思维方法",
+            "新民主主义革命的胜利",
+            "社会主义制度在中国的确立"
+        ]
+        for keyword in mustCoverKeywords {
+            XCTAssertTrue(searchableText.contains { $0.contains(keyword) },
+                          "高考覆盖缺口未补齐：缺少「\(keyword)」相关知识点")
+        }
+
+        let supplementedIds = ["k1405", "k1406", "k1407", "k1905", "k2105", "k2305", "k2306", "k2405", "k2406", "k2605", "k1005", "k1006"]
+        for id in supplementedIds {
+            guard let point = MainLineData.knowledge(id: id) else {
+                XCTFail("补充知识点 \(id) 缺失")
+                continue
+            }
+            XCTAssertTrue(point.hasDeepExplanation, "补充知识点 \(id) 缺少结构化深度讲解")
+            if point.grade == .s || point.grade == .a {
+                XCTAssertGreaterThanOrEqual(point.mustReciteLines.count, 3, "补充知识点 \(id) 必背句不足")
+                XCTAssertGreaterThanOrEqual(point.sampleAnswerSentences.count, 2, "补充知识点 \(id) 高分答案句不足")
+            }
+        }
     }
 }

@@ -81,11 +81,14 @@ enum ExamPracticeData {
 
     static func subjectiveQuestions(seed: Int) -> [SubjectiveQuestion] {
         ExamPracticeBlueprint.subjectiveQuestionSlots.compactMap { slot in
+            // 套练必须维持 48/52 高考分值比例，候选题必须先按 slot.score 过滤，
+            // 否则同主题同题型但分值不同的人工题在轮换时会破坏总分约束。
             let authoredByType = AuthoredSubjectiveQuestionData.questions(topic: slot.topic)
-                .filter { $0.questionType == slot.type }
+                .filter { $0.questionType == slot.type && $0.score == slot.score }
             let authoredByTopic = AuthoredSubjectiveQuestionData.questions(topic: slot.topic)
+                .filter { $0.score == slot.score }
             let fallback = SubjectiveQuestionData.generated.filter { question in
-                MainLineData.node(id: question.nodeId)?.topic == slot.topic
+                MainLineData.node(id: question.nodeId)?.topic == slot.topic && question.score == slot.score
             }
             return unique(rotated(authoredByType, seed: seed) +
                           rotated(authoredByTopic, seed: seed) +
