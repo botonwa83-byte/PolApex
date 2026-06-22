@@ -4,9 +4,14 @@ struct AscentPathView: View {
     @EnvironmentObject var progress: ProgressManager
     @ObservedObject private var purchase = PurchaseManager.shared
     @State private var showPaywall = false
+    @State private var demoNodeActive = ProcessInfo.processInfo.arguments.contains("-demoNodeDetail")
 
     private var nodes: [LearningNode] { MainLineData.nodes }
     private var recommended: LearningNode? { progress.currentNode(in: nodes) }
+    private var demoNode: LearningNode? {
+        nodes.first { $0.knowledgePoints.contains { $0.id == "k1301" } }
+            ?? nodes.first { $0.knowledgePoints.contains { $0.hasDeepExplanation } }
+    }
 
     var body: some View {
         NavigationStack {
@@ -50,6 +55,9 @@ struct AscentPathView: View {
             .background(Color.apexBackground.ignoresSafeArea())
             .navigationTitle("指挥中心")
             .sheet(isPresented: $showPaywall) { PaywallView() }
+            .navigationDestination(isPresented: $demoNodeActive) {
+                if let demoNode { NodeDetailView(node: demoNode) }
+            }
         }
     }
 
@@ -380,9 +388,14 @@ struct NodeDetailView: View {
     }
 }
 
-private struct KnowledgePointStudyCard: View {
+struct KnowledgePointStudyCard: View {
     let point: KnowledgePoint
-    @State private var expandedBlocks: Set<String> = ["必背原文", "白话理解"]
+    @State private var expandedBlocks: Set<String>
+
+    init(point: KnowledgePoint, defaultExpanded: Set<String> = ["必背原文", "白话理解"]) {
+        self.point = point
+        _expandedBlocks = State(initialValue: defaultExpanded)
+    }
 
     private var allBlocks: [(title: String, icon: String, color: Color, lines: [String])] {
         var blocks: [(title: String, icon: String, color: Color, lines: [String])] = []

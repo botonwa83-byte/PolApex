@@ -4,56 +4,35 @@ struct ConceptGraphView: View {
     @State private var selected: ConceptNode? = {
         ProcessInfo.processInfo.arguments.contains("-demoConceptDetail") ? ConceptGraphData.nodes.first : nil
     }()
-    @State private var filterTopic: PoliticsTopic?
-
-    private let canvasSize = CGSize(width: 1300, height: 1300)
-    private var positions: [String: CGPoint] { Self.layout(nodes: ConceptGraphData.nodes, size: canvasSize) }
+    /// 默认展开节点最多的模块，进来就能看到一个像样的圆环，而不是一排全收起的标题或只有一个孤点。
+    @State private var expandedTopics: Set<PoliticsTopic> = {
+        let present = PoliticsTopic.allCases.filter { t in ConceptGraphData.nodes.contains { $0.topic == t } }
+        let densest = present.max { a, b in
+            ConceptGraphData.nodes.filter { $0.topic == a }.count < ConceptGraphData.nodes.filter { $0.topic == b }.count
+        }
+        return densest.map { [$0] } ?? []
+    }()
 
     private var topicsPresent: [PoliticsTopic] {
         PoliticsTopic.allCases.filter { topic in ConceptGraphData.nodes.contains { $0.topic == topic } }
     }
 
-    private var visibleNodes: [ConceptNode] {
-        guard let filterTopic else { return ConceptGraphData.nodes }
-        return ConceptGraphData.nodes.filter { $0.topic == filterTopic }
-    }
-
-    private var visibleIds: Set<String> { Set(visibleNodes.map(\.id)) }
-
-    /// 默认聚焦到当前可见节点里最密集的星团中心，而不是画布几何中心——
-    /// 几何中心刚好落在环形排布的星团之间，是一片空地，会让人觉得"星图"是空的。
-    private var focusPoint: CGPoint {
-        let topic = filterTopic ?? densestTopic
-        let nodesInTopic = visibleNodes.filter { $0.topic == topic }
-        let points = nodesInTopic.compactMap { positions[$0.id] }
-        guard !points.isEmpty else { return CGPoint(x: canvasSize.width / 2, y: canvasSize.height / 2) }
-        let x = points.map(\.x).reduce(0, +) / CGFloat(points.count)
-        let y = points.map(\.y).reduce(0, +) / CGFloat(points.count)
-        return CGPoint(x: x, y: y)
-    }
-
-    private var densestTopic: PoliticsTopic {
-        topicsPresent.max { a, b in
-            ConceptGraphData.nodes.filter { $0.topic == a }.count < ConceptGraphData.nodes.filter { $0.topic == b }.count
-        } ?? .politicsLaw
+    private func nodes(in topic: PoliticsTopic) -> [ConceptNode] {
+        ConceptGraphData.nodes.filter { $0.topic == topic }
     }
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 0) {
-                header
-                topicFilterBar
-                Divider()
-                ScrollViewReader { proxy in
-                    ScrollView([.horizontal, .vertical], showsIndicators: true) {
-                        graphCanvas
-                            .frame(width: canvasSize.width, height: canvasSize.height)
-                    }
-                    .onAppear { proxy.scrollTo("focusAnchor", anchor: .center) }
-                    .onChange(of: filterTopic) { _ in
-                        proxy.scrollTo("focusAnchor", anchor: .center)
+            ScrollView {
+                VStack(spacing: Spacing.md) {
+                    header
+                    ForEach(topicsPresent) { topic in
+                        moduleSection(topic)
                     }
                 }
+                .padding(Spacing.lg)
+                .padding(.bottom, Spacing.xxl)
+                .readableWidth()
             }
             .background(Color.apexBackground.ignoresSafeArea())
             .navigationTitle("概念星图")
@@ -65,45 +44,17 @@ struct ConceptGraphView: View {
 
     private var header: some View {
         VStack(alignment: .leading, spacing: Spacing.sm) {
-            Text("节点按权重着色和大小区分，连线表示包含、对比、因果或主体职责关系。双指或拖动可平移画布，点节点看详情。")
+            Text("按模块收纳。点开模块看它的概念圆环，连线表示包含、对比、因果或主体职责关系；点节点看必背原文、答题模板和高分句。")
                 .font(.caption)
                 .foregroundColor(.secondary)
                 .fixedSize(horizontal: false, vertical: true)
             HStack {
                 stat("\(ConceptGraphData.nodes.count)", "核心节点", .apexTeal)
-                stat("\(ConceptGraphData.edges.count)", "关系边", .apexBlue)
+                stat("\(topicsPresent.count)", "模块", .apexBlue)
                 stat("\(ConceptGraphData.nodes.filter { $0.grade == .s }.count)", "S级", .apexRed)
             }
+            .cardSurface()
         }
-        .padding(.horizontal, Spacing.lg)
-        .padding(.top, Spacing.sm)
-        .padding(.bottom, Spacing.md)
-    }
-
-    private var topicFilterBar: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: Spacing.sm) {
-                filterChip(title: "全部", isOn: filterTopic == nil) { filterTopic = nil }
-                ForEach(topicsPresent) { topic in
-                    filterChip(title: topic.name, isOn: filterTopic == topic) { filterTopic = topic }
-                }
-            }
-            .padding(.horizontal, Spacing.lg)
-            .padding(.bottom, Spacing.sm)
-        }
-    }
-
-    private func filterChip(title: String, isOn: Bool, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            Text(title)
-                .font(.caption.weight(isOn ? .bold : .regular))
-                .foregroundColor(isOn ? .white : .primary)
-                .padding(.horizontal, 12)
-                .padding(.vertical, 6)
-                .background(isOn ? Color.apexTeal : Color.apexCardSurface)
-                .clipShape(Capsule())
-        }
-        .buttonStyle(.plain)
     }
 
     private func stat(_ value: String, _ label: String, _ color: Color) -> some View {
@@ -118,68 +69,117 @@ struct ConceptGraphView: View {
         .frame(maxWidth: .infinity)
     }
 
-    private var graphCanvas: some View {
-        ZStack {
+    // MARK: - 模块行（点开展开圆环）
+
+    private func moduleSection(_ topic: PoliticsTopic) -> some View {
+        let topicNodes = nodes(in: topic)
+        let sCount = topicNodes.filter { $0.grade == .s }.count
+        let isExpanded = expandedTopics.contains(topic)
+        let preview = topicNodes.prefix(8).map(\.title).joined(separator: " / ")
+
+        return VStack(alignment: .leading, spacing: Spacing.sm) {
+            Button {
+                withAnimation(.easeInOut(duration: 0.25)) {
+                    if isExpanded {
+                        expandedTopics.remove(topic)
+                    } else {
+                        expandedTopics.insert(topic)
+                    }
+                }
+            } label: {
+                HStack(alignment: .top, spacing: Spacing.md) {
+                    Circle()
+                        .fill(topic.stage.color)
+                        .frame(width: 10, height: 10)
+                        .padding(.top, 6)
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack(spacing: Spacing.sm) {
+                            Text(topic.name)
+                                .font(AppFont.cardTitle)
+                                .foregroundColor(.primary)
+                            Spacer(minLength: 0)
+                            Text("节点\(topicNodes.count) · S\(sCount)")
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                            Image(systemName: "chevron.down")
+                                .font(.caption2)
+                                .foregroundColor(.secondary)
+                                .rotationEffect(.degrees(isExpanded ? 180 : 0))
+                        }
+                        Text(preview)
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                            .lineLimit(2)
+                            .multilineTextAlignment(.leading)
+                    }
+                }
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+            if isExpanded {
+                ringGraph(for: topicNodes)
+                    .padding(.top, Spacing.xs)
+                    .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+        .cardSurface(padding: Spacing.md)
+    }
+
+    // MARK: - 单个模块的概念圆环
+
+    /// 权重最高的节点放圆心，其余按圆周均匀铺开；半径随数量增长，避免节点挤在一起。
+    private func ringLayout(for topicNodes: [ConceptNode]) -> (positions: [String: CGPoint], side: CGFloat) {
+        let sorted = topicNodes.sorted { $0.grade > $1.grade }
+        guard let anchor = sorted.first else { return ([:], 0) }
+        let ring = Array(sorted.dropFirst())
+        let count = ring.count
+        let radius: CGFloat = count == 0 ? 0 : min(150, max(78, CGFloat(count) * 13))
+        let margin: CGFloat = 46
+        let side = (radius + margin) * 2
+        let center = CGPoint(x: side / 2, y: side / 2)
+
+        var positions: [String: CGPoint] = [anchor.id: center]
+        for (index, node) in ring.enumerated() {
+            let angle = (2 * Double.pi / Double(count)) * Double(index) - .pi / 2
+            positions[node.id] = CGPoint(
+                x: center.x + radius * cos(angle),
+                y: center.y + radius * sin(angle)
+            )
+        }
+        return (positions, side)
+    }
+
+    private func ringGraph(for topicNodes: [ConceptNode]) -> some View {
+        let layout = ringLayout(for: topicNodes)
+        let ids = Set(topicNodes.map(\.id))
+
+        return ZStack {
             Canvas { context, _ in
-                for edge in ConceptGraphData.edges {
-                    guard visibleIds.contains(edge.from), visibleIds.contains(edge.to),
-                          let from = positions[edge.from], let to = positions[edge.to] else { continue }
+                for edge in ConceptGraphData.edges where ids.contains(edge.from) && ids.contains(edge.to) {
+                    guard let from = layout.positions[edge.from],
+                          let to = layout.positions[edge.to] else { continue }
                     var path = Path()
                     path.move(to: from)
                     path.addLine(to: to)
                     let highlighted = selected?.id == edge.from || selected?.id == edge.to
                     context.stroke(path,
-                                    with: .color(highlighted ? Color.apexTeal.opacity(0.55) : Color.secondary.opacity(0.18)),
+                                    with: .color(highlighted ? Color.apexTeal.opacity(0.55) : Color.secondary.opacity(0.20)),
                                     lineWidth: highlighted ? 1.8 : 1)
                 }
             }
-            .frame(width: canvasSize.width, height: canvasSize.height)
             .allowsHitTesting(false)
 
-            ForEach(visibleNodes) { node in
-                if let point = positions[node.id] {
+            ForEach(topicNodes) { node in
+                if let point = layout.positions[node.id] {
                     NodeBubble(node: node, isSelected: selected?.id == node.id)
                         .position(point)
                         .onTapGesture { selected = node }
                 }
             }
-
-            Color.clear
-                .frame(width: 1, height: 1)
-                .position(focusPoint)
-                .id("focusAnchor")
         }
-    }
-
-    /// 按学科模块把节点分成若干"星团"，团内再按圆周摆开，
-    /// 让"星图"真正长成有节点位置和连线的网络图，而不是卡片网格。
-    private static func layout(nodes: [ConceptNode], size: CGSize) -> [String: CGPoint] {
-        var result: [String: CGPoint] = [:]
-        let topics = PoliticsTopic.allCases.filter { topic in nodes.contains { $0.topic == topic } }
-        guard !topics.isEmpty else { return result }
-
-        let center = CGPoint(x: size.width / 2, y: size.height / 2)
-        let clusterRadius = min(size.width, size.height) * 0.30
-        let angleStep = (2 * Double.pi) / Double(topics.count)
-
-        for (index, topic) in topics.enumerated() {
-            let clusterAngle = angleStep * Double(index) - .pi / 2
-            let clusterCenter = CGPoint(
-                x: center.x + clusterRadius * cos(clusterAngle),
-                y: center.y + clusterRadius * sin(clusterAngle)
-            )
-            let nodesInTopic = nodes.filter { $0.topic == topic }
-            let nodeRadius = 64.0 + Double(nodesInTopic.count) * 9
-            let nodeAngleStep = (2 * Double.pi) / Double(max(nodesInTopic.count, 1))
-            for (nodeIndex, node) in nodesInTopic.enumerated() {
-                let nodeAngle = nodeAngleStep * Double(nodeIndex)
-                result[node.id] = CGPoint(
-                    x: clusterCenter.x + nodeRadius * cos(nodeAngle),
-                    y: clusterCenter.y + nodeRadius * sin(nodeAngle)
-                )
-            }
-        }
-        return result
+        .frame(width: layout.side, height: layout.side)
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -218,6 +218,7 @@ private struct ConceptDetailSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     private var edges: [ConceptEdge] { ConceptGraphData.related(to: node.id) }
+    private var studyPoints: [KnowledgePoint] { ConceptGraphData.knowledgePoints(for: node.id) }
 
     var body: some View {
         NavigationStack {
@@ -236,13 +237,36 @@ private struct ConceptDetailSheet: View {
 
                     VStack(alignment: .leading, spacing: Spacing.sm) {
                         SectionHeader(title: "材料触发词", systemImage: "scope", accent: .apexGold)
-                        HStack {
+                        FlowWrap(spacing: Spacing.xs) {
                             ForEach(node.triggerWords, id: \.self) { word in
                                 TagChip(text: word, color: .apexGold)
                             }
                         }
                     }
                     .cardSurface()
+
+                    if studyPoints.isEmpty {
+                        EmptyStateView(title: "深度讲解整理中",
+                                       systemImage: "book.closed",
+                                       message: "该节点的逐句讲解即将上线，先用上方触发词和下方关系网把概念串起来。")
+                            .cardSurface()
+                    } else {
+                        VStack(alignment: .leading, spacing: Spacing.sm) {
+                            SectionHeader(title: "考点深度讲解（\(studyPoints.count)）",
+                                          systemImage: "text.book.closed",
+                                          accent: .apexRed)
+                            Text("含必背原文、白话理解、答题模板、易混辨析、高分答案句与扣分提醒——点开每一栏都是可直接背、可直接抄进答卷的内容。")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.horizontal, Spacing.xs)
+
+                        ForEach(studyPoints) { point in
+                            KnowledgePointStudyCard(point: point, defaultExpanded: ["必背原文"])
+                        }
+                    }
 
                     if !edges.isEmpty {
                         VStack(alignment: .leading, spacing: Spacing.sm) {

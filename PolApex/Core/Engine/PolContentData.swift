@@ -3723,6 +3723,73 @@ enum ConceptGraphData {
     static func concept(id: String) -> ConceptNode? {
         nodes.first { $0.id == id }
     }
+
+    /// 每个星图节点对应主线里的深度知识点。点开节点不再只看几个触发词，
+    /// 而是直接调出"必背原文/白话理解/答题模板/材料触发/易混辨析/高分答案句/扣分提醒/默写清单"。
+    static let knowledgeMap: [String: [String]] = [
+        // 政治与法治
+        "c_party": ["k1601", "k1602", "k1603", "k1604"],
+        "c_democracy": ["k1701", "k0702"],
+        "c_rulelaw": ["k1801", "k1802", "k1803", "k1804"],
+        "c_npc": ["k1702", "k0701"],
+        "c_government": ["k0701", "k0704"],
+        "c_cppcc": ["k1703"],
+        "c_grassroots": ["k0702", "k0703"],
+        "c_citizen": ["k0602", "k0604"],
+        "c_organs": ["k0701", "k0704"],
+        "c_constitution": ["k0601", "k1803"],
+        "c_nationalsystem": ["k0703", "k1704"],
+        // 经济与社会
+        "c_market": ["k1401", "k1403"],
+        "c_macro": ["k1402", "k1404"],
+        "c_basicecon": ["k1301", "k1302", "k1303"],
+        "c_distribution": ["k1501", "k1304", "k1503"],
+        "c_commonwealth": ["k1504", "k0802"],
+        "c_newidea": ["k1405", "k0804"],
+        "c_highquality": ["k1406", "k1407"],
+        "c_realeconomy": ["k1406", "k1407"],
+        "c_marketdefect": ["k1403", "k1402"],
+        // 哲学与文化
+        "c_philosophybasic": ["k1905"],
+        "c_matter": ["k1901", "k1903"],
+        "c_practice": ["k1902", "k1904"],
+        "c_connection": ["k2001", "k2003"],
+        "c_contradiction": ["k2002"],
+        "c_history": ["k2101", "k2102"],
+        "c_value": ["k2103"],
+        "c_lifevalue": ["k2105"],
+        "c_dialecticalneg": ["k2004"],
+        "c_law": ["k1903", "k1901"],
+        "c_culture": ["k2201", "k2203"],
+        "c_corevalue": ["k2204", "k2202"],
+        // 国际政治
+        "c_nationalinterest": ["k2301", "k2303"],
+        "c_timesubject": ["k2302", "k2304"],
+        "c_community": ["k2704", "k0904"],
+        "c_stateform": ["k2305"],
+        "c_intlorg": ["k2306"],
+        // 法律与生活
+        "c_civilright": ["k2401", "k2402"],
+        "c_contract": ["k2403", "k2402"],
+        "c_disputeresolve": ["k2501", "k2502"],
+        "c_marriage": ["k2405"],
+        "c_enterprise": ["k2406"],
+        // 逻辑与思维
+        "c_reasoning": ["k2602", "k2604"],
+        "c_judge": ["k2601", "k2603"],
+        "c_dialecticmethod": ["k2605"],
+        // 冲刺综合
+        "c_newproductivity": ["k1406", "k2703"],
+        "c_hotspot": ["k2701", "k2702"],
+        "c_essaymethod": ["k2802", "k2801"],
+        "c_subjectlocator": ["k2802", "k2803"],
+        "c_economychain": ["k2803", "k2804"],
+        "c_contradiction3": ["k2002", "k2802"]
+    ]
+
+    static func knowledgePoints(for nodeId: String) -> [KnowledgePoint] {
+        (knowledgeMap[nodeId] ?? []).compactMap { MainLineData.knowledge(id: $0) }
+    }
 }
 
 enum WeaponGuideData {
