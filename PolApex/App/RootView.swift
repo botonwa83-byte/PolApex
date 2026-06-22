@@ -25,7 +25,13 @@ struct RootView: View {
 }
 
 struct MainTabView: View {
-    @State private var selectedTab = 0
+    @State private var selectedTab: Int = {
+        let args = ProcessInfo.processInfo.arguments
+        if args.contains("-tabTraining") { return 1 }
+        if args.contains("-tabConceptGraph") { return 2 }
+        if args.contains("-tabMore") { return 3 }
+        return 0
+    }()
 
     var body: some View {
         TabView(selection: $selectedTab) {

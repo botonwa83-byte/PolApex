@@ -41,7 +41,7 @@ enum AuthoredQuestionData {
         q(
             id: "aq_soc_03",
             nodeId: "n12",
-            knowledgeId: "k1202",
+            knowledgeId: "k1203",
             topic: .socialism,
             stage: .required,
             prompt: "某班围绕新时代十年成就开展探究，既展示科技突破，也展示民生改善和生态治理。最适合归纳的主题是：",
@@ -329,8 +329,8 @@ enum AuthoredQuestionData {
         // MARK: - 经济模块新增
         q(
             id: "aq_econ_04",
-            nodeId: "n15",
-            knowledgeId: "k1502",
+            nodeId: "n14",
+            knowledgeId: "k1406",
             topic: .economy,
             stage: .required,
             prompt: "某地建设现代化产业体系，既发展先进制造业，又推动现代服务业深度融合。从经济生活角度，这样做的传导路径是：",
@@ -383,10 +383,10 @@ enum AuthoredQuestionData {
         ),
         q(
             id: "aq_econ_07",
-            nodeId: "n27",
-            knowledgeId: "k2701",
+            nodeId: "n14",
+            knowledgeId: "k1405",
             topic: .economy,
-            stage: .sprint,
+            stage: .required,
             prompt: "某地把绿色发展理念，发展绿色产业和绿色消费。下列传导正确的是：",
             options: [
                 "绿色产业发展→增加绿色产品供给→引导绿色消费→推动可持续发展",
@@ -402,8 +402,8 @@ enum AuthoredQuestionData {
         // MARK: - 政治模块新增
         q(
             id: "aq_pol_04",
-            nodeId: "n16",
-            knowledgeId: "k1601",
+            nodeId: "n17",
+            knowledgeId: "k1701",
             topic: .politicsLaw,
             stage: .required,
             prompt: "某市建立街道议事会，居民代表、人大代表、政协委员和社区工作者共同参与社区治理。这一做法：",
@@ -421,7 +421,7 @@ enum AuthoredQuestionData {
         q(
             id: "aq_pol_05",
             nodeId: "n17",
-            knowledgeId: "k1701",
+            knowledgeId: "k1702",
             topic: .politicsLaw,
             stage: .required,
             prompt: "全国人大常委会审议通过《黄河保护法草案，听取国务院相关工作报告。这体现了：",
@@ -456,8 +456,8 @@ enum AuthoredQuestionData {
         ),
         q(
             id: "aq_pol_07",
-            nodeId: "n16",
-            knowledgeId: "k1603",
+            nodeId: "n17",
+            knowledgeId: "k1702",
             topic: .politicsLaw,
             stage: .required,
             prompt: "宪法规定，中华人民共和国的一切权力属于人民。人民行使国家权力的机关是全国人民代表大会和地方各级人民代表大会。由此可见：",
@@ -475,7 +475,7 @@ enum AuthoredQuestionData {
         q(
             id: "aq_pol_08",
             nodeId: "n17",
-            knowledgeId: "k1702",
+            knowledgeId: "k1703",
             topic: .politicsLaw,
             stage: .required,
             prompt: "政协委员围绕生态环境保护议题，开展专题调研，提交提案建议。人民政协：",
@@ -512,7 +512,7 @@ enum AuthoredQuestionData {
         q(
             id: "aq_phi_06",
             nodeId: "n20",
-            knowledgeId: "k2001",
+            knowledgeId: "k2002",
             topic: .philosophyCulture,
             stage: .required,
             prompt: "面对复杂国际形势，我国坚持独立自主的和平外交政策，既维护国家利益，又促进共同发展。体现的辩证法道理是：",
@@ -547,8 +547,8 @@ enum AuthoredQuestionData {
         ),
         q(
             id: "aq_phi_08",
-            nodeId: "n22",
-            knowledgeId: "k2202",
+            nodeId: "n21",
+            knowledgeId: "k2105",
             topic: .philosophyCulture,
             stage: .required,
             prompt: "评价一个人的价值，主要看他：",
@@ -584,8 +584,8 @@ enum AuthoredQuestionData {
         ),
         q(
             id: "aq_cul_02",
-            nodeId: "n21",
-            knowledgeId: "k2102",
+            nodeId: "n22",
+            knowledgeId: "k2201",
             topic: .philosophyCulture,
             stage: .required,
             prompt: "某剧团用现代科技赋能传统文化，数字故宫、数字敦煌让文物“活”了下来。这说明：",
@@ -696,8 +696,8 @@ enum AuthoredQuestionData {
         // MARK: - 社会主义新增
         q(
             id: "aq_soc_04",
-            nodeId: "n11",
-            knowledgeId: "k1101",
+            nodeId: "n10",
+            knowledgeId: "k1007",
             topic: .socialism,
             stage: .required,
             prompt: "中国特色社会主义进入新时代，我国社会主要矛盾已经转化为人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。这意味着：",
@@ -1075,8 +1075,8 @@ enum AuthoredSubjectiveQuestionData {
         ),
         sq(
             id: "asq_cul_01",
-            nodeId: "n21",
-            knowledgeId: "k2102",
+            nodeId: "n22",
+            knowledgeId: "k2201",
             grade: .a,
             questionType: .measure,
             score: 10,
@@ -1109,8 +1109,8 @@ enum AuthoredSubjectiveQuestionData {
         ),
         sq(
             id: "asq_leg_02",
-            nodeId: "n24",
-            knowledgeId: "k2402",
+            nodeId: "n25",
+            knowledgeId: "k2502",
             grade: .a,
             questionType: .materialAnalysis,
             score: 10,

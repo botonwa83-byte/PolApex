@@ -214,7 +214,7 @@ enum ExamPointCatalog {
         ],
         "n08": [
             kp("k0803", "改革开放", "改革开放是决定当代中国命运的关键抉择，是强国之路、富民之路。", .a, .original, nil, ["改革开放", "强国"]),
-            kp("k0804", "新发展理念", "创新、协调、绿色、开放、共享的发展理念相互贯通，统一服务高质量发展。", .a, .template, nil, ["新发展理念", "高质量"])
+            kp("k0804", "创新协调绿色开放共享", "创新、协调、绿色、开放、共享的发展理念相互贯通，统一服务高质量发展。", .a, .template, nil, ["新发展理念", "高质量"])
         ],
         "n09": [
             kp("k0903", "民族团结", "维护民族团结要坚持民族平等、民族团结和各民族共同繁荣的方针。", .b, .original, nil, ["民族团结", "共同繁荣"]),
@@ -224,7 +224,8 @@ enum ExamPointCatalog {
             kp("k1003", "生产力决定生产关系", "生产力是最革命、最活跃的因素，生产关系一定要适应生产力发展状况。", .a, .boundary, nil, ["生产力", "生产关系"]),
             kp("k1004", "资本主义基本矛盾", "生产社会化和生产资料资本主义私人占有之间的矛盾是资本主义社会的基本矛盾。", .b, .original, nil, ["资本主义", "基本矛盾"]),
             kp("k1005", "新民主主义革命的胜利", "新民主主义革命的胜利，从根本上改变了近代以后中国社会的发展方向和中国人民的历史命运，为实现中华民族伟大复兴创造了根本社会条件。", .b, .original, "新民主主义革命胜利不等于社会主义革命完成，二者是中国革命的两个不同阶段。", ["新民主主义革命", "民族独立", "人民解放"]),
-            kp("k1006", "社会主义制度在中国的确立", "社会主义基本制度的确立，为中国一切发展进步奠定了根本政治前提和制度基础，实现了中华民族有史以来最为广泛而深刻的社会变革。", .b, .original, "社会主义制度确立不等于社会主义建设的全部完成，后续还要经历建设和改革探索。", ["社会主义改造", "基本制度", "社会变革"])
+            kp("k1006", "社会主义制度在中国的确立", "社会主义基本制度的确立，为中国一切发展进步奠定了根本政治前提和制度基础，实现了中华民族有史以来最为广泛而深刻的社会变革。", .b, .original, "社会主义制度确立不等于社会主义建设的全部完成，后续还要经历建设和改革探索。", ["社会主义改造", "基本制度", "社会变革"]),
+            kp("k1007", "社会主要矛盾与初级阶段国情", "中国特色社会主义进入新时代，我国社会主要矛盾已经转化为人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾，但我国仍处于并将长期处于社会主义初级阶段的基本国情没有变。", .a, .boundary, "社会主要矛盾的转化不等于社会基本矛盾发生变化，也不等于跨越了社会主义初级阶段。", ["社会主要矛盾", "初级阶段", "两个没有变"])
         ],
         "n11": [
             kp("k1103", "中国特色社会主义制度优势", "制度优势要结合党的领导、人民当家作主、集中力量办大事、依法治国等角度说明。", .s, .template, nil, ["制度优势", "治理效能"]),
@@ -2869,6 +2870,27 @@ enum DeepKnowledgeCatalog {
                 "社会主义改造的完成标志着我国社会主义基本制度的确立，是新中国历史上的伟大成就。"
             ],
             checklist: ["能说出社会主义基本制度确立的标志性意义", "能区分制度确立和制度完善的不同阶段", "能把材料历史叙述对应到根本政治前提和制度基础"]
+        ),
+        "k1007": ex(
+            recite: [
+                "我国社会主要矛盾已经转化为人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。",
+                "我国仍处于并将长期处于社会主义初级阶段的基本国情没有变，我国是世界最大发展中国家的国际地位没有变。",
+                "认识和把握社会主要矛盾，要坚持解放和发展社会生产力，着力解决发展不平衡不充分问题。"
+            ],
+            plain: "这个点常考“两个变与两个没有变”：变的是社会主要矛盾的具体表述，没有变的是基本国情（社会主义初级阶段）和国际地位（最大发展中国家）。材料只要出现“新时代成就＋仍存在不足”的对比，就在考这一点。",
+            template: [
+                "先点明社会主要矛盾已转化为人民日益增长的美好生活需要和不平衡不充分发展之间的矛盾。",
+                "结合材料说明这一矛盾在具体领域（经济/民生/区域）的体现。",
+                "落到没有改变社会主义初级阶段基本国情和最大发展中国家国际地位的结论。"
+            ],
+            scenes: ["材料展示新时代成就同时提及发展不平衡、不充分的问题", "材料涉及区域、城乡发展差距"],
+            confusions: ["社会主要矛盾转化不是社会基本矛盾的变化，社会基本矛盾仍是生产力和生产关系、经济基础和上层建筑的矛盾。", "主要矛盾转化不等于跨越社会主义初级阶段，基本国情没有变。"],
+            traps: ["把社会主要矛盾的转化等同于社会基本矛盾发生根本变化。", "认为发展成就证明已经跨越社会主义初级阶段。"],
+            samples: [
+                "材料中科技、民生、生态领域的成就和短板并存，体现了人民日益增长的美好生活需要和不平衡不充分的发展之间的矛盾。",
+                "认识社会主要矛盾的转化，必须牢牢把握我国仍处于并将长期处于社会主义初级阶段这一没有变的基本国情。"
+            ],
+            checklist: ["能默写社会主要矛盾的转化表述", "能说出“两个没有变”的具体内容", "能把材料成就与短板对应到主要矛盾的两个方面"]
         )
     ]
 
@@ -2925,7 +2947,7 @@ enum QuestionBank {
 
     private static func makeQuestion(node: LearningNode, point: KnowledgePoint, variant: Int) -> PoliticsQuestion {
         let correct = correctOption(for: point, variant: variant)
-        let distractors = distractors(for: point, node: node)
+        let distractors = distractors(for: point, node: node, excluding: correct)
         var options = [correct] + distractors
         let shift = variant % options.count
         options = Array(options[shift..<options.count] + options[0..<shift])
@@ -2972,7 +2994,16 @@ enum QuestionBank {
     }
 
     private static func correctOption(for point: KnowledgePoint, variant: Int) -> String {
-        switch point.cardType {
+        guard point.hasDeepExplanation else {
+            return genericCorrectOption(for: point.cardType)
+        }
+        let pool = (point.sampleAnswerSentences + point.mustReciteLines).filter { !$0.isEmpty }
+        guard !pool.isEmpty else { return genericCorrectOption(for: point.cardType) }
+        return pool[variant % pool.count]
+    }
+
+    private static func genericCorrectOption(for cardType: MemoryCardType) -> String {
+        switch cardType {
         case .original: return "使用教材规范表述，并结合材料说明其作用或意义。"
         case .boundary: return "先分清概念边界和适用范围，再判断材料是否匹配。"
         case .subject: return "先锁定行为主体，再写该主体依法或依规能够履行的职责。"
@@ -2981,12 +3012,31 @@ enum QuestionBank {
         }
     }
 
-    private static func distractors(for point: KnowledgePoint, node: LearningNode) -> [String] {
-        [
+    /// 优先用该考点自己的陷阱/易混表述做干扰项，而不是套全局通用模板，
+    /// 避免同一 cardType 的全部考点共享一套完全相同的四个选项。
+    private static func distractors(for point: KnowledgePoint, node: LearningNode, excluding correct: String) -> [String] {
+        let generic = [
             "只要方向正确，可以用生活化语言替代学科术语。",
             "看到相近关键词，就把 \(node.topic.name) 的全部原理都写上。",
             "优先选择表述绝对、范围最大的选项，因为政治题强调立场鲜明。"
         ]
+        guard point.hasDeepExplanation else { return generic }
+
+        var seen = Set<String>()
+        let pool = (point.commonTrapLines + point.explanation.confusions).filter { line in
+            !line.isEmpty && line != correct && seen.insert(line).inserted
+        }
+
+        if pool.count >= 3 {
+            return Array(pool.prefix(3))
+        }
+        var result = pool
+        for candidate in generic where result.count < 3 {
+            if !result.contains(candidate) {
+                result.append(candidate)
+            }
+        }
+        return result
     }
 
     private static func trapTags(for point: KnowledgePoint) -> [String] {

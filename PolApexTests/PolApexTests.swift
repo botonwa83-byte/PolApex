@@ -31,8 +31,32 @@ final class PolApexTests: XCTestCase {
                 XCTAssertTrue(question.options.indices.contains(question.answerIndex),
                               "题 \(question.id) 答案下标越界")
                 XCTAssertEqual(question.knowledgeId, point.id)
+                XCTAssertEqual(Set(question.options).count, question.options.count,
+                               "题 \(question.id) 选项内部重复")
             }
         }
+    }
+
+    func testGeneratedQuestionOptionsAreKnowledgeSpecific() {
+        // 深讲考点的生成题不应该退化成全局共用的通用选项模板，否则学生靠背选项格式就能蒙对。
+        let genericOptionPool: Set<String> = [
+            "使用教材规范表述，并结合材料说明其作用或意义。",
+            "先分清概念边界和适用范围，再判断材料是否匹配。",
+            "先锁定行为主体，再写该主体依法或依规能够履行的职责。",
+            "由材料场景触发对应模块，再用关键词召回相关原理。",
+            "按设问类型组织为原理句、材料句和结果意义句。"
+        ]
+        let deepPoints = MainLineData.allKnowledgePoints.filter(\.hasDeepExplanation)
+        var pointsWithSpecificOptions = 0
+        for point in deepPoints {
+            let questions = QuestionBank.generated.filter { $0.knowledgeId == point.id }
+            let hasSpecificOption = questions.contains { question in
+                question.options.contains { !genericOptionPool.contains($0) }
+            }
+            if hasSpecificOption { pointsWithSpecificOptions += 1 }
+        }
+        XCTAssertEqual(pointsWithSpecificOptions, deepPoints.count,
+                       "有深度讲解的考点中，生成题选项仍完全等同通用模板，未使用该考点自己的采分句或陷阱")
     }
 
     func testNodePracticeIdsResolveFullCoverage() {
@@ -179,6 +203,14 @@ final class PolApexTests: XCTestCase {
         for question in AuthoredSubjectiveQuestionData.all {
             XCTAssertEqual(home[question.knowledgeId], question.nodeId,
                            "人工非选择题 \(question.id) 的 knowledgeId \(question.knowledgeId) 实际归属节点与声明的 nodeId 不一致")
+        }
+    }
+
+    func testAuthoredChoiceQuestionTopicMatchesNodeTopic() {
+        for question in AuthoredQuestionData.all {
+            guard let node = MainLineData.node(id: question.nodeId) else { continue }
+            XCTAssertEqual(question.topic, node.topic,
+                           "人工选择题 \(question.id) 的 topic 字段与其 nodeId 所属节点的真实 topic 不一致")
         }
     }
 

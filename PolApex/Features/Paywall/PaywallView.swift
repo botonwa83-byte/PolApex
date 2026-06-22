@@ -64,9 +64,10 @@ struct PaywallView: View {
                     .padding(.top, 10)
                 #endif
 
-                Text("购买通过 Apple 账户完成。\(PremiumContentPlan.paywallFootnote)")
+                Text("购买即视为同意[用户协议](https://botonwa83-byte.github.io/PolApex/terms.html)与[隐私政策](https://botonwa83-byte.github.io/PolApex/privacy.html)。购买通过 Apple 账户完成。\(PremiumContentPlan.paywallFootnote)")
                     .font(.system(size: 10))
                     .foregroundColor(.secondary)
+                    .tint(.apexLava)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 28)
                     .padding(.top, 16)

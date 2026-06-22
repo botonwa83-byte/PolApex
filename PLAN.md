@@ -308,9 +308,10 @@ KnowledgePoint
 免费下载 + 一次买断 ¥22，非消耗型：
 
 - product id：`com.polapex.app.full_unlock`
-- 永久免费：初中道法全部 + 高中必修前 6 个核心关 + 概念星图基础版 + 记忆卡/复习/错题本 + 武器库前 6 把。
-- 付费解锁：高中必修全量、选必、冲刺、全部 Boss 对决、完整答案工厂、时政转译、全套武器靶场。
-- 代码守门：`PoliticsModule.isFree`、`PurchaseManager.freeNodeCount/freeWeaponCount/freeBossCount`，配 `testFreeTierPolicy`。
+- 永久免费：初中道法全部 9 关主线 + 武器库前 6 把 + 材料案例前 2 个 + Boss 双解前 1 场 + 概念星图基础版 + 记忆卡/复习/错题本。
+- 付费解锁：高中必修全量、选必、冲刺、其余 Boss 对决、完整答案工厂、时政转译、全套武器靶场。
+- 代码守门：`PurchaseManager.freeNodeCount/freeWeaponCount/freeMaterialCaseCount/freeDuelCount`，配 `testFreeTierPolicy`。
+- 注：早期设计稿曾写"高中必修前 6 个核心关免费"，2026-06-22 上线审计核对代码后修正为以上实际划线，避免商品文案与实际免费范围不一致。
 
 ## 十三、诚信红线
 

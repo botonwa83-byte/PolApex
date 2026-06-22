@@ -18,6 +18,7 @@
 		40BDFC3C5EA656FCAFD5620A /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF1BB0899F28C30FD85508F0 /* ReviewView.swift */; };
 		4D05A2AB923F0DAD971F7E17 /* TrainingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A085CBBCB508AE30B3C8D28 /* TrainingView.swift */; };
 		62DAF7F99A43A65B70AC8D82 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBDADE3661041F73D444609 /* PaywallView.swift */; };
+		6828C42BFB17260C4C8C40B4 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3DCFC273ADE9D9852C450A5B /* PrivacyInfo.xcprivacy */; };
 		7A7DC3FAC679E7F5D3F4CD6F /* PoliticsModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4799D4AB5007D110090C33B6 /* PoliticsModels.swift */; };
 		7F21F888EBBA52A797604132 /* ConceptGraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B012EF863470A6ECF1E865F5 /* ConceptGraphView.swift */; };
 		95DF7035F4C67CA5B9F2ACEA /* PolApexTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BB2BD66299779425A7BEE5 /* PolApexTests.swift */; };
@@ -56,10 +57,11 @@
 		3108101FBDD42EAC32AFBB15 /* PolApexApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PolApexApp.swift; sourceTree = "<group>"; };
 		31D7EF374398E179C687A699 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
 		3A085CBBCB508AE30B3C8D28 /* TrainingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrainingView.swift; sourceTree = "<group>"; };
+		3DCFC273ADE9D9852C450A5B /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		4138FBE7C14D1BAC9F7F565D /* AuthoredPracticeData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthoredPracticeData.swift; sourceTree = "<group>"; };
 		4509B9E7601BFEBE77A8E103 /* PromoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoView.swift; sourceTree = "<group>"; };
 		4799D4AB5007D110090C33B6 /* PoliticsModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoliticsModels.swift; sourceTree = "<group>"; };
-		6DB34A56551108A7331B3F37 /* PolApex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PolApex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6DB34A56551108A7331B3F37 /* PolApex.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = PolApex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D815EAA4A15EB8942461AFB /* ThemeColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeColors.swift; sourceTree = "<group>"; };
 		9C212E781575E286690DC42B /* TrapDrillView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrapDrillView.swift; sourceTree = "<group>"; };
 		A9EF23838627CA33AC1394BC /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 		9A807A897172B7BDAD4DE0CF /* PolApex */ = {
 			isa = PBXGroup;
 			children = (
+				3DCFC273ADE9D9852C450A5B /* PrivacyInfo.xcprivacy */,
 				D1C4B42677E246AE76097C73 /* App */,
 				8D4E8E5A025BB893E0A5B503 /* Core */,
 				FE4004CDEC84E929C76B5B4D /* Features */,
@@ -292,6 +295,11 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					B6BD3C78980DC92C5BD7121B = {
+						DevelopmentTeam = Z7F8BY55DS;
+					};
+				};
 			};
 			buildConfigurationList = D283BDA1B78C7FA3B624486D /* Build configuration list for PBXProject "PolApex" */;
 			developmentRegion = en;
@@ -319,6 +327,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDBADA56565E17BB44B20BD0 /* Assets.xcassets in Resources */,
+				6828C42BFB17260C4C8C40B4 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
