@@ -20,17 +20,26 @@ final class PurchaseManager: ObservableObject {
 
     @Published private(set) var isUnlocked: Bool = false
     @Published private(set) var product: Product?
+    @Published private(set) var productLoadState: ProductLoadState = .idle
     @Published private(set) var isPurchasing: Bool = false
     @Published private(set) var errorMessage: String?
 
     private let storageKey = "polapex_full_unlocked"
+    private var transactionUpdatesTask: Task<Void, Never>?
 
     private init() {
         isUnlocked = UserDefaults.standard.bool(forKey: storageKey)
-        Task {
-            await loadProduct()
-            await refreshEntitlements()
+        transactionUpdatesTask = Task { [weak self] in
+            await self?.observeTransactionUpdates()
         }
+        Task {
+            await refreshEntitlements()
+            await prepareForPurchase()
+        }
+    }
+
+    deinit {
+        transactionUpdatesTask?.cancel()
     }
 
     func isNodePremiumLocked(_ node: LearningNode) -> Bool {
@@ -54,24 +63,54 @@ final class PurchaseManager: ObservableObject {
     }
 
     @MainActor
-    func loadProduct() async {
+    @discardableResult
+    func prepareForPurchase(forceReload: Bool = false) async -> Product? {
+        if let product, !forceReload {
+            productLoadState = .ready
+            return product
+        }
+
+        productLoadState = .loading
+        errorMessage = nil
+
         do {
             let products = try await Product.products(for: [productID])
-            product = products.first
+            if let storeProduct = products.first(where: { $0.id == productID }) {
+                product = storeProduct
+                productLoadState = .ready
+                return storeProduct
+            } else {
+                product = nil
+                productLoadState = .unavailable
+                errorMessage = "暂时无法从 App Store 获取内购项目，请稍后重试或使用恢复购买。"
+                return nil
+            }
         } catch {
-            errorMessage = nil
+            product = nil
+            productLoadState = .unavailable
+            errorMessage = "连接 App Store 失败，请检查网络后重试。"
+            return nil
         }
     }
 
     @MainActor
     func purchase() async {
-        guard let product else {
-            errorMessage = "获取产品信息失败，请检查网络后重试"
-            return
-        }
+        guard !isPurchasing else { return }
         isPurchasing = true
         errorMessage = nil
         defer { isPurchasing = false }
+
+        let productToPurchase: Product?
+        if let product {
+            productToPurchase = product
+        } else {
+            productToPurchase = await prepareForPurchase(forceReload: true)
+        }
+
+        guard let product = productToPurchase else {
+            return
+        }
+
         do {
             let result = try await product.purchase()
             switch result {
@@ -116,6 +155,20 @@ final class PurchaseManager: ObservableObject {
         }
     }
 
+    private func observeTransactionUpdates() async {
+        for await result in Transaction.updates {
+            guard case .verified(let transaction) = result,
+                  transaction.productID == productID else {
+                continue
+            }
+
+            if transaction.revocationDate == nil {
+                await MainActor.run { unlock() }
+            }
+            await transaction.finish()
+        }
+    }
+
     @MainActor
     private func unlock() {
         isUnlocked = true
@@ -135,4 +188,11 @@ final class PurchaseManager: ObservableObject {
         UserDefaults.standard.set(isUnlocked, forKey: storageKey)
     }
     #endif
+}
+
+enum ProductLoadState {
+    case idle
+    case loading
+    case ready
+    case unavailable
 }

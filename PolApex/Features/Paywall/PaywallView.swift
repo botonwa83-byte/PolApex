@@ -4,7 +4,12 @@ struct PaywallView: View {
     @ObservedObject private var purchase = PurchaseManager.shared
     @Environment(\.dismiss) private var dismiss
 
-    private var priceLabel: String { purchase.product?.displayPrice ?? "¥22" }
+    private var priceLabel: String { purchase.product?.displayPrice ?? "App Store 价格" }
+    private var purchaseButtonTitle: String {
+        if purchase.isPurchasing { return "处理中..." }
+        if purchase.productLoadState == .loading { return "连接 App Store..." }
+        return "立即解锁 \(priceLabel)"
+    }
 
     var body: some View {
         ScrollView {
@@ -38,6 +43,18 @@ struct PaywallView: View {
 
                 purchaseButton
                     .padding(.horizontal, 24)
+
+                if purchase.productLoadState == .unavailable {
+                    Button {
+                        Task { await purchase.prepareForPurchase(forceReload: true) }
+                    } label: {
+                        Text("重新获取内购项目")
+                            .font(.footnote.weight(.semibold))
+                            .foregroundColor(.apexLava)
+                    }
+                    .padding(.top, 10)
+                    .disabled(purchase.isPurchasing)
+                }
 
                 Button { Task { await purchase.restore() } } label: {
                     Text("恢复购买")
@@ -78,6 +95,9 @@ struct PaywallView: View {
         .onChange(of: purchase.isUnlocked) { unlocked in
             if unlocked { dismiss() }
         }
+        .task {
+            await purchase.prepareForPurchase()
+        }
     }
 
     private var heroArea: some View {
@@ -111,7 +131,7 @@ struct PaywallView: View {
                 } else {
                     Image(systemName: "lock.open.fill")
                 }
-                Text(purchase.isPurchasing ? "处理中..." : "立即解锁 \(priceLabel)")
+                Text(purchaseButtonTitle)
                     .fontWeight(.bold)
             }
             .font(.headline)

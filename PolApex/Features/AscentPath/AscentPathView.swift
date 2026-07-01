@@ -80,7 +80,7 @@ struct AscentPathView: View {
                             .foregroundColor(.white.opacity(0.9))
                     }
                     Spacer(minLength: 0)
-                    Text(purchase.product?.displayPrice ?? "¥22")
+                    Text(purchase.product?.displayPrice ?? "内购")
                         .font(AppFont.cardTitle)
                         .foregroundColor(.white)
                         .padding(.horizontal, 11)
