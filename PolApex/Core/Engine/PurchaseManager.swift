@@ -181,13 +181,6 @@ final class PurchaseManager: ObservableObject {
         case .verified(let value): return value
         }
     }
-
-    #if DEBUG
-    @MainActor func debugToggle() {
-        isUnlocked.toggle()
-        UserDefaults.standard.set(isUnlocked, forKey: storageKey)
-    }
-    #endif
 }
 
 enum ProductLoadState {
